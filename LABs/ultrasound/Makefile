@@ -25,4 +25,4 @@ flash:
 	avrdude -p atmega328p -c arduino -P /dev/ttyUSB0 -b 115200 -D -U flash:w:$(FIRMWARE):i
 	
 clean:
-	rm ultrasound.o $(APP) $(FIRMWARE)
+	rm ultrasound.o main.o $(APP) $(FIRMWARE)
