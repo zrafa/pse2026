@@ -1,9 +1,9 @@
 Programación de Sistemas Embebidos
 
-Entrada y Salidas Digitales
----------------------------
+Entradas y Salidas Digitales
+----------------------------
 
-El laboratorio 2 está compuesto por estos proyectos:
+Desarrollar los siguientes proyectos:
 
 led_toy/
 	Crear una función delayms(int n) que permita hacer un delay de n ms.
@@ -14,14 +14,19 @@ led_toy/
 	una hilera de 10 leds en vertical.
 
 	Frecuencia cercana a los 40hz.
+	Como prueba de concepto puede utilizar 8 leds y utilizar una imagen
+	de 8x8 pixeles.
 
 led_toy_pulsador/
 	Controlar el led_toy, para cambiar la imagen al presionar un pulsador.
+	En este proyecto se deben contar con algunas imagenes en el programa.
+	El usuario, al presionar el pulsador, puede indicar al sistema 
+	que muestre la siguiente imagen que el programa contenga.
 
 
 ultrasonido/ 
 	Utilizando el _delay_us() de la biblioteca de AVR C implementar
-	un driver para el sensor de distancia ultrasonido. 	
+	un driver para el sensor de distancia ultrasonido.
 
 	Desarrollar el control de un sensor digital de ultrasonido HC-SR04
 	utilizando la informacion de referencia de la pagina web
