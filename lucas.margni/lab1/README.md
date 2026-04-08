@@ -1,8 +1,8 @@
 # Laboratorio 1 - Primer sistema embebido
 
 En el presente laboratorio se encuentran dos programas princiaples:
-    * **led_blink**: contiene un bucle infinito en el que repetidamente se prende y apaga un led.
-    * **knight-rider**: contiene un bucle infinito en el que se prenden y apagan 5 leds, generando un efecto en escalera, simulando que hay una sección de luz que se mueve a través de los leds.
+    - **led_blink**: contiene un bucle infinito en el que repetidamente se prende y apaga un led.
+    - **knight-rider**: contiene un bucle infinito en el que se prenden y apagan 5 leds, generando un efecto en escalera, simulando que hay una sección de luz que se mueve a través de los leds.
 
 Además, se encuentran respondidas unas preguntas teóricas en archivos de texto.
 
@@ -23,6 +23,7 @@ o
 ```bash
 cd knight-rider/
 ```
+
 
 Luego se debe conectar el chip a la computadora para poder pasarle el programa y ejecutar
 ```bash
