@@ -1,0 +1,16 @@
+¿Donde se instaló el compilador gcc-avr?
+
+Para revisar donde se instaló, ejecuté el comando 'dpkg -L gcc-avr'.
+De esta manera, pude observar que los ejecutables se encuentran ubicados en:
+
+/usr/bin/avr-c++
+/usr/bin/avr-cpp
+/usr/bin/avr-g++
+/usr/bin/avr-gcc
+/usr/bin/avr-gcc-7.3.0
+/usr/bin/avr-gcc-ar
+/usr/bin/avr-gcc-nm
+/usr/bin/avr-gcc-ranlib
+/usr/bin/avr-gcov
+/usr/bin/avr-gcov-dump
+/usr/bin/avr-gcov-tool

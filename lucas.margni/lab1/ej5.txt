@@ -1,0 +1,3 @@
+¿Donde están los encabezados y las bibliotecas de C para avr?
+
+Esto se encuentra en el paquete 'avr-libc'

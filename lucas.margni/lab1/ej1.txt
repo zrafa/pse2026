@@ -1,0 +1,7 @@
+El sistema operativo que yo utilizo es Ubuntu.
+
+Los paquetes que tuve que instalar para el toolchain de cross-compiling a AVR son:
+    - gcc-avr, para el comilador de c
+    - avr-libc, para las librerias y los headers
+    - binutils-avr, para los programas que completan el ciclo de desarrollo con herramientas extras que son parte del entorno de desarrollo
+    - avrdude, para poder hablar al cable usb y poder transferir el software al target
