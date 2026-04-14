@@ -1,0 +1,21 @@
+Serial
+usar hoja de datos Ultrasonido HC-SR04 hoja 6/10
+Diagrama de tiempo
+Trigger y Echo
+La de trigger tiene que estar en Bajo, y si uno quiere activar una observacion del sensor, hay que encender la señal de disparo
+por 10 micro segundos al menos,usar el delay que viene en el codigo esqueleto.
+La bajamos y el modulito va a empezar a tirar una rafaga ultrasonica al aire, que dura un tiempo.
+La señal de echo es la que nos da la resputa y tenemos que controlar, la vamos a leer , como dato de entrada
+El echo esta en Bajo, y se pone en alto (1) cuando termina de enviarse la rafaga.
+Cuando veamos que es 1, tenemos que ir contando cuantos microsegundos pasa, y cuando vuevle a 0, terminamos de contar.
+Con ese tiempo de lo que tardo, tenemos que calcular a cuantos cm estaba el objeto. Si pasa de 18ms, posiblemente no haya nada adelante
+
+Serial.o , desde el controlador podamos ver datos en la pc
+completamos el ultrasound.c, lo llamo desde el main
+En el main usamos el drive para enviar un dato.
+
+Probar cutecom para verlo
+en settings ponerle baudrate a 9600, cant de bits por segundo transferidos
+no usar make flash en una terminal, cuando el cutecom esta abierto, porque usa el serial y no se puede en paralelo
+
+La idea del proyecto es ir mostrando a que distancia esta el tp, constantemente
