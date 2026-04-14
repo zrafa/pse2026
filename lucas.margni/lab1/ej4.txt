@@ -1,0 +1,15 @@
+Verifique donde instaló, el sistema de paquetes de Linux, las binutils de avr.
+
+Para revisar donde se instaló, ejecuté el comando 'dpkg -L binutils-avr'.
+De esta manera, pude observar que los ejecutables se encuentran ubicados en:
+
+/usr/bin/avr-ar
+/usr/bin/avr-as
+/usr/bin/avr-ld
+/usr/bin/avr-ld.bfd
+/usr/bin/avr-nm
+/usr/bin/avr-objcopy
+/usr/bin/avr-objdump
+/usr/bin/avr-ranlib
+/usr/bin/avr-readelf
+/usr/bin/avr-strip

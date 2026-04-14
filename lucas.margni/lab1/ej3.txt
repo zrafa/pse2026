@@ -1,0 +1,6 @@
+Utilice el comando file para verificar que el archivo elf ejecutable generado al compilar es de la arquitectura adecuada.
+
+Al ejecutar el comando 'file main.o' me da la siguiente respuesta:
+    main.o: ELF 32-bit LSB relocatable, Atmel AVR 8-bit, version 1 (SYSV), not stripped
+
+Se puede observar que este ejecutable se ha generado en la arquitectura adecuada, es decir en AVR

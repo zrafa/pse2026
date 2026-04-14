@@ -1,0 +1,14 @@
+Utilizando el programa decodificado por avr-objdump en 7- a.
+    ¿Es el código de main() lo primero que se ejecuta en su program? 
+    ¿Puede encontrar la llamada a la función main?
+    ¿En qué dirección comienza el código de la función main?
+    ¿Qué son todas las instrucciones anteriores a main?
+
+Lo primero que se ejecuta en mi programa es la función <__vectors>, que parece ser que resetea los vectores.
+
+La llamada a main se encuenta en la función <__do_copy_data>, en la dirección 8a.
+
+El código de la función <main> se encuentra en la dirección 112.
+
+Las instrucciones anteriores a main son las funciones creadas por mi (<led_off>, <led_on>, <led_init>, <esperar>)
+y otras funciones creadas por el compilador para inicializar todo el programa.
