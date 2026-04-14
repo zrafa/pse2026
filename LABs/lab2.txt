@@ -67,3 +67,9 @@ melody/
 	Desarrollar un reproductor elegante para la melodia.
 	
 	
+sensor-de-proximidad-vehicular/	(opcional)
+	Implementar un sensor de proximidad que funcione de manera similar
+	al de los vehículos al realizar "marcha atrás": al aproximarse 
+	marcha atrás y detectar otro vehículo se comienza a escuchar un 
+	pitido en donde la duración del pitido tiene relación directa
+	con la distancia con el vehículo detrás.
