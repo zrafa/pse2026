@@ -1,0 +1,87 @@
+
+/* utils.c - funciones de soporte al programa principal */
+
+/* Enciende y apaga un led conectado al puerto B bit 5 de un atmega328p
+ * El puerto B de un atmega328p tiene los bits 0-5 mapeados a los 
+ * pines 8-13 de arduino 
+ */
+
+
+/* puertos de E/S */
+
+/* direccion de PORTB (registro de datos) */
+volatile unsigned char * puerto_b = (unsigned char *) 0x25;
+
+/* direccion de DDR B (registro de control) */
+volatile unsigned char * ddr_b = (unsigned char *) 0x24;
+
+/* direccion PIN B (registro de datos de entrada) */
+volatile unsigned char * pin_b = (unsigned char *) 0x23;
+
+
+/* puertos de E/S */
+
+/* direccion de PORTC (registro de datos) */
+volatile unsigned char * puerto_c = (unsigned char *) 0x28;
+
+/* direccion de DDR C (registro de control) */
+volatile unsigned char * ddr_c = (unsigned char *) 0x27;
+
+/* direccion PIN C (registro de datos de entrada) */
+volatile unsigned char * pin_c = (unsigned char *) 0x26;
+
+
+/* direccion de PORTD (registro de datos) */
+volatile unsigned char * puerto_d = (unsigned char *) 0x2B;
+
+/* direccion de DDR D (registro de control) */
+volatile unsigned char * ddr_d = (unsigned char *) 0x2A;
+
+/* direccion PIN D (registro de datos de entrada) */
+volatile unsigned char * pin_d = (unsigned char *) 0x29;
+
+volatile unsigned char aux_b;
+
+volatile unsigned char aux_c;
+
+volatile unsigned char aux_d;
+
+
+/* led_init: configura el puerto b y d como salida */
+void led_init() {
+	aux_b = 0x3F;
+	aux_c = 0x30;
+	aux_d = 0xFF;
+	*ddr_b = aux_b;
+	*ddr_c = aux_c;
+	*ddr_d = aux_d;
+}
+
+void esperar(int cantidad_ms) {
+	volatile unsigned long i;
+	/* delay ajustable de ms */
+	for (i=0; i<452 * cantidad_ms; i++);
+}
+
+
+/* led_off: apaga el led conectado al puerto b bit 5 */
+void pasarEstado(unsigned char estado_b, unsigned char estado_d) {
+	*puerto_b = *puerto_b | (estado_b & aux_b);
+	*puerto_b = *puerto_b & (estado_b | ~aux_b);
+	*puerto_c = *puerto_c | ((estado_b >> 2) & aux_c);
+	*puerto_c = *puerto_c & ((estado_b >> 2)| ~aux_c);
+	*puerto_d = estado_d;
+}
+
+void pulsador_init(void) {
+    /* PC0 como entrada */
+    *ddr_c &= ~(1 << 0);
+    /* activar pull-up interno: el pin queda en HIGH cuando no se pulsa */
+    *puerto_c |= (1 << 0);
+}
+
+int leer_pulsador(void) {
+    /* pulsador en PC0 (pin A0), configurado como entrada con pull-up */
+    /* retorna 1 si está presionado (pin en bajo) */
+    return !( *pin_c & (1 << 0) );
+}
