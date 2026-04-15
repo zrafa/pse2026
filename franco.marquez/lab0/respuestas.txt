@@ -1,0 +1,107 @@
+1)
+int , int a;  entero con signo
+float, float b; punto flotante de precision simple
+double, Double c; punto flotante de precision doble
+char, char d; Caracter/Entero de 1 byte
+void Tipo vacio, usado en funciones y punteros
+
+short int  e;
+long int   f;
+long double g;
+
+
+2)
+Una word (palabra) es la unidad natural de datos que un procesador puede manejar en una sola operación. 
+Es el tamaño que tiene el bus de datos interno y los registros de propósito general del procesador.
+
+En una arquitectura de 8 bits → 1 word = 8 bits
+En una arquitectura de 32 bits → 1 word = 32 bits
+En una arquitectura de 64 bits → 1 word = 64 bits
+
+3)
+El estándar de C no define un tamaño fijo para int. Lo que dice el estándar (ISO/IEC 9899) es:
+int debe tener al menos 16 bits, y debe ser el tamaño "natural" más eficiente para la arquitectura.
+
+4)
+
+char a = 'M';
+printf("a = %i \n", a);      // Imprime: a = 77
+printf("La letra %c \n", a); // Imprime: La letra M
+
+%c → le dice a printf que interprete el valor como un carácter y muestre su símbolo
+%i → le dice a printf que interprete el valor como un entero y muestre su número
+
+5)
+char i;           // Con signo (signed)
+unsigned char j;  // Sin signo
+
+i tiene rango de -128 a 127
+j tiene rango de 0 a 255
+
+Con 8 bits y signo, el bit más significativo se usa para el signo → 2⁷ = 128 valores negativos + 127 positivos + 0
+Sin signo, los 8 bits representan magnitud pura → 0 a 2⁸−1 = 255
+
+6)
+'a' = 97 decimal = 0x61 = 01100001
+'A' = 65 decimal = 0x41 = 01000001
+77 decimal = 0x4D = 01001101
+0x4D = 77 decimal = 01001101
+
+i char i = 'a';01100001
+j char j = 77; 01001101
+k char k = 0x4D;01001101
+m unsigned char m = 'a'; 01100001
+n unsigned char n = 0x4d ; 01001101
+p unsigned char p = 'A'; 01000001
+
+i, m → mismo valor: 'a' = 97 → 01100001
+j, k, n → mismo valor: 77 / 0x4D → 01001101 (77 decimal y 0x4D hexadecimal son exactamente lo mismo)
+p → valor distinto: 'A' = 65 → 01000001
+
+La diferencia entre char y unsigned char no cambia los bits almacenados, sino cómo se interpreta ese patrón de bits cuando hacés operaciones o lo imprimís con %i.
+El patrón de 8 bits en memoria es idéntico para i y m, por ejemplo.
+
+
+7)
+Dirección       Variable        Valor
+─────────────────────────────────────────────
+0xFFA00004      x[0]            1024  (0x00000400)
+0xFFA00008      x[1]            32    (0x00000020)
+0xFFA0000C      x[2]            -1    (0xFFFFFFFF)
+
+
+8.4)
+valor binario de unsigned char x = 11
+11 en decimal → descomponemos: 8 + 2 + 1 = 2³ + 2¹ + 2⁰
+
+bit7  bit6  bit5  bit4  bit3  bit2  bit1  bit0
+  0     0     0     0     1     0     1     1
+
+x = 00001011
+
+8.5)
+if ( x & (1 << 3) ) printf("el bit3 de la variable registro es 1\n");
+
+8.6)
+x &= ~( (1<<2) | (1<<1) | (1<<0) );
+// equivalente más legible:
+x &= ~0x07;   // 0x07 = 00000111  →  ~0x07 = 11111000
+
+/*  x        : 0 0 0 0 1 0 1 1
+  ~0x07    : 1 1 1 1 1 0 0 0
+  AND (&)  : 0 0 0 0 1 0 0 0   → bits 2,1,0 borrados
+
+8.7)
+x |= (1<<7) | (1<<6);
+// equivalente:
+x |= 0xC0;   // 0xC0 = 11000000
+
+
+9)
+Como unsigned char solo puede almacenar entre 0 y 255
+si 190 * 500 = 95000,
+95000 necesita al menos 17 bits para representarse: 95000 en binario = 0001 0111 0010 1000 1000, no entra en 8 bits
+
+El casteo a unsigned char se aplica antes de la division, entonces como de 17 bits, solo quedan los 8 menos significativos, quedaria 8
+Despues 8 / 190 = 0.042.., pero como es division entera queda RES=0.
+
