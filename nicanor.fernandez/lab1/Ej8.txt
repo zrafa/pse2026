@@ -1,0 +1,2 @@
+Al desensamblar la sección text lo primero que se ejecuta es la funcion <__vectors>, luego muestra la función <__ctors_end>, luego la función <__do_copy_data>, la cual llama a la función main en la dirección 8a. 
+El código de la función main se encuentra en la dirección 112 y las instrucciones anteriores al main contiene funciones creadas del compilador como las nombradas anteriormente y el resto de las funciones definidas en el programa, es decir, led_on, led_off, led_init y esperar.

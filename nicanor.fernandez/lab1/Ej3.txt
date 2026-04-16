@@ -1,0 +1,9 @@
+Al ejecutar el comando:
+
+    $ file main.o
+
+La terminal me da la siguiente respuesta:
+
+    main.o: ELF 32-bit LSB relocatable, Atmel AVR 8-bit, version 1 (SYSV), not stripped
+
+Esto dice que la arquitectura es AVR, por ende es correcta para nuestro target.

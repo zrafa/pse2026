@@ -1,0 +1,1 @@
+Los encabezados y las bibliotecas de C para AVR están en el paquete "avr-libc".

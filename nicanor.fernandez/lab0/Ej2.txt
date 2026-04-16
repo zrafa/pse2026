@@ -1,0 +1,1 @@
+La palabra word en la arquitectura de una computadora es una cantidad fija de bits que la CPU procesa, transfiere o almacena en una operacion nativa. Es decir, generalmente podemos encontrar arquitecturas de 32 bits, lo que quiere decir que trabajan con un tamaño de palabra de 4 bytes, y arquitecturas de 64 bits, lo que quiere decir que utilizan un tamaño de palabra de 8 bytes.

@@ -1,0 +1,5 @@
+Yo utilizo el sistema operativo Linux con la distribución Ubuntu, los paquetes que componen mi toolchain son:
+ - gcc-avr, para el compilador de C en la arquitectura AVR,
+ - avr-libc, para las librerías y los headers,
+ - binutils-avr, que contiene herramientas extras,
+ - avrdude, para poder transferir el programa al target AVR.

@@ -1,0 +1,16 @@
+Para verificar donde se instalaron las binutils de avr ejecuté el comando
+
+    $ sudo dpkg -L binutils-avr
+
+Lo cual me devolvió que los instalables están en las siguientes rutas:
+
+    /usr/bin/avr-ar
+    /usr/bin/avr-as
+    /usr/bin/avr-ld
+    /usr/bin/avr-ld.bfd
+    /usr/bin/avr-nm
+    /usr/bin/avr-objcopy
+    /usr/bin/avr-objdump
+    /usr/bin/avr-ranlib
+    /usr/bin/avr-readelf
+    /usr/bin/avr-strip

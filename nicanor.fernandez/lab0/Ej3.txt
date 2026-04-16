@@ -1,0 +1,2 @@
+En una arquitectura de 8 bits una variable declarada como int puede almacenar 1 byte, es decir, 8 bits.
+Tanto en una arquitectura de 32 bits como en una de 64 bits una variable declarada como int puede almacenar 4 bytes, es decir, 32 bits.
