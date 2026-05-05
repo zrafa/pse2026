@@ -1,0 +1,44 @@
+#include "serial.h"
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+    /* Inicializar el puerto serie a 9600 baudios */
+    serial_init();
+
+    /* 1. Configurar D2, D3, D4 y D5 como ENTRADAS 
+     * El registro DDRD controla la dirección. Ponemos ceros en esos bits. */
+    DDRD &= ~((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5));
+
+    /* 2. Activar las resistencias Pull-Up internas
+     * Al escribir un '1' en el PORTD cuando es entrada, activamos la resistencia. */
+    PORTD |= ((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5));
+
+    while (1)
+    {
+        /* Leer el estado de los pines usando el registro PIND.
+         * Si la lectura del bit da 0, significa que el botón está apretado (conectado a GND) */
+
+        if (!(PIND & (1 << 2))) {
+            serial_put_char('a'); /* Izquierda */
+            _delay_ms(150);       /* Antirrebote y control de repetición */
+        }
+        
+        if (!(PIND & (1 << 3))) {
+            serial_put_char('d'); /* Derecha */
+            _delay_ms(150);
+        }
+        
+        if (!(PIND & (1 << 4))) {
+            serial_put_char('w'); /* Arriba */
+            _delay_ms(150);
+        }
+        
+        if (!(PIND & (1 << 5))) {
+            serial_put_char('s'); /* Abajo */
+            _delay_ms(150);
+        }
+    }
+
+    return 0;
