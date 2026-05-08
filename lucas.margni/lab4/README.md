@@ -1,17 +1,3 @@
-Ejecutar proyecto brillo-adaptable
-
-```bash
-make clean
-make
-make flash
-```
-
-y ejecutar el script
-```bash
-chmod +x script.sh
-sudo ./script.sh
-```
-
 # Lab 4 — ADC
 
 En este laboratorio se desarrollan tres proyectos en los que se implementa un driver para ADC, utilizandose para distintas funciones.
@@ -80,7 +66,7 @@ make flash
 
 ## Juego SDL Ball
 
-En este proyecto se implementa la conexión del juego SDL ball mediante un knob (encargado del movimiento) y un pulsador (para el disparo de la pelota) conectados al chip.
+En este proyecto se implementa la conexión del juego SDL ball mediante un knob (encargado del movimiento), conectado a *A2*, y un pulsador (para el disparo de la pelota), conectado a *PB0*.
 
 ### Cómo ejecutar
 
