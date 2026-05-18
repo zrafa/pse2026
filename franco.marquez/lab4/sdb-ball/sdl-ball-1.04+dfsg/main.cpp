@@ -38,7 +38,8 @@
 // para pse
 #include <thread>
 #include <chrono>
-
+#include <stdio.h>
+#include <string.h>
 
 #ifdef WIN32
   #define _OBJC_NO_COM
@@ -3703,12 +3704,32 @@ bool screenShot()
 
 /* thread para Programacion de Sistemas Embebidos */
 void thread_pse(controllerClass & control) {
-	float p = -1;
+  float p=-1;
+	char serial_nombre[] = "/dev/ttyUSB0";
+
+  //char *  readBuff;
+  char readBuff[1];
+  FILE *serPort = fopen(serial_nombre,"r");
+
+  char aux = 0;
+
 	while (1) {
-		std::cout << "Hola mundo " << std::endl;
-		std::this_thread::sleep_for(std::chrono::seconds(2));  // 2 seg
-          	control.movePaddle(p);
-		p = p + 0.01;
+		std::cout << "aux:" << aux << std::endl;
+    printf("%d",aux);
+		//std::this_thread::sleep_for(std::chrono::seconds(2));  // 2 seg
+    std::this_thread::sleep_for(200ms);	
+    memset(readBuff,0,1); //Pone todo en 0 para limpiar el buffer
+    fread(readBuff, sizeof(char),1,serPort);
+
+    if(sizeof(readBuff)!=0){  
+      aux = readBuff[0];
+
+      p =(( (float) aux / 255)*3.2) -1.6;
+      
+      control.movePaddle(p);
+    
+    }
+    
     }
 }
 

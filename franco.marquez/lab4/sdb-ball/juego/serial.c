@@ -63,6 +63,7 @@ void serial_init() {
         puerto_serial->status_control_c = (1<<USBS0)|(3<<UCSZ00);
 
 
+
 }
 
 
