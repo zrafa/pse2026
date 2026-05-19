@@ -1,4 +1,7 @@
 #include <stdint.h> 
+#include <avr/io.h>
+#include <avr/interrumpt.h>
+
 
 typedef struct{
     uint8_t TCCR2A;
@@ -38,3 +41,8 @@ int init_timer(){
     //las interup globales se hacen desde el main
 }
 
+ISR(TIMER2_COMPA_vect){
+    ticks++;
+
+    if(ticks==1000){}//Paso un segundo
+}
