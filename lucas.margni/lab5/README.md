@@ -97,7 +97,7 @@ make
 make flash
 ```
 
-3. Ejecutar el script del archivo **send_wav.c** para enviarle al chip el archivo de audio
+5. Ejecutar el script del archivo **send_wav.c** para enviarle al chip el archivo de audio
 ```bash
 # Compilar
 gcc -o send_wav send_wav.c
