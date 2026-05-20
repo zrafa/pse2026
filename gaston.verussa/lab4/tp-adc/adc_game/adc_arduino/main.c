@@ -1,0 +1,51 @@
+
+#include "adc.h"
+#include "utils.h"
+#include "serial.h"
+#include "math.h"
+
+void main()
+{
+
+	adc_init();
+	serial_init();
+
+	int val;
+	int anterior_val = 0;
+	double aux;
+
+        while (1) {
+                /* obtener una conversión ADC desde el pin de entrada ADC 2 */
+                val = adc_get(2);
+
+                aux = pow((double) val / 1023, (double) (1.0/3.14));
+
+                aux = aux * 1023;
+
+                val = (int) aux;
+
+		if(val != anterior_val)
+		{
+			serial_put_int(val, 4);
+			serial_put_char('\n');
+			anterior_val = val;
+		}
+
+		// Si se presionó el boton, dispara
+
+		/* realizar alguna acción con val */
+		/*
+		serial_put_char(cero + (char) val/1000);
+		serial_put_char(cero + (char) (val/100) % 10);
+		serial_put_char(cero + (char) (val/10) % 10);
+		serial_put_char(cero + (char) val%10);
+		
+		serial_put_char('x');
+		serial_put_char('x');
+		serial_put_char('x');
+		*/
+		delay_ms(50);
+	}
+
+	for(;;);
+}

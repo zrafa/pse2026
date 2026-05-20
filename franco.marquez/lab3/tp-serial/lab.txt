@@ -1,0 +1,12 @@
+1- Obtener el código fuente del tp serial y verificarlos.
+a. Leer los archivos fuentes del práctico. Entender el archivo cabecera serial.h y observar cómo es utilizado
+por main.c
+b. Agregue un archivo Makefile al proyecto (puede utilizar el de la web modificando los nombres de los
+archivos del proyecto). Verifique el Makefile con make clean; make
+
+Serial.h inicializa el serial para ser utilizado
+Luego tiene metodos para pasar y obtener caracteres.
+
+
+The initialization process normally consists of setting the baud rate, setting frame format 
+and enabling the transmitter or the receiver depending on the usage. 
