@@ -12,6 +12,6 @@
 
 void adc_init(void);
 int adc_get(char);
-void delay_ms(int);
+void delay_ms();
 
 #endif /* _SERIAL_H */
