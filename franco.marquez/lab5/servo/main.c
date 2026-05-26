@@ -27,13 +27,11 @@ int main(){
         }
             */
            
-        adc= adc / 1024.0;
-        adc = pow(adc, 0,25) * 1000.0;
+        val_timer = 250 + (((uint32_t)adc_raw * 250) / 1023);
 
-        val_timer = (unsigned int)(floor(val)) + 1000;
-        val_timer = (unsigned int)(val_timer / 4);
+        actualizar_servo(val_timer);
 
-
+        _delay_ms(15);
 
     }
 

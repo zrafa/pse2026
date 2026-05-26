@@ -34,25 +34,17 @@ volatile timer1 *timer1 = (timer1 *)0x80;
 // char *timsk2 = (char *)0x70; // Mascara del timer
 volatile uint8_t *timsk1 = (uint8_t *)0x6f;
 
-// tccr1a
+//(TCCR1A)
 #define WGM10 0
 #define WGM11 1
-
 #define COM1A0 6
-#define COM1B0 4
-
 #define COM1A1 7
-#define COM1B1 5
 
-// tccr1b
-
-#define WGM12 3
-#define WGM13 4
-
-
+//(TCCR1B)
 #define CS10 0
 #define CS11 1
-#define CS12 2
+#define WGM12 3
+#define WGM13 4
 
 long long centesimas = 0;
 void init_timer()
@@ -61,42 +53,63 @@ void init_timer()
        timer->tccr2a |= (1 << WGM21);  // Lo pongo en 1
        timer->tccr2b &= ~(1 << WGM22);
        timer->tccr2b |= (1 << CS20) | (1 << CS21) | (1 << CS22);
-       */
+       
     // 256 * 10 / 16,384 = 156,25
     // Lo ssteamos en 155 OCR
     // preescalar seria cs20 21 y 22 para 1024
     // timer->ocr2a = 155;
     // Habilitar interrumpciones especificas del timer
     //*timsk2 |= (1 << OCEI2A);
+*/
+
+    // Configurar el pin OC1A (PB1) como salida (0x24 es DDRB)
+    *(volatile uint8_t*)0x24 |= (1 << 1);
 
     /* modo Fast PWM (14) */
-    // COM1A1/COM1B1 COM1A0/COM1B0 Tienn que estar 0 1//
-    timer1->tccr1a |= (1 << COM1B0);
-    timer1->tccr1a |= (1 << COM1A0);
 
-    timer->tccr1a &= ~(1 << COM1A1);
-    timer->tccr1a &= ~(1 << COM1B1);
+    //Limpio los registros
+    timer1->tccr1a = 0;
+    timer1->tccr1b = 0;
 
-    //Registro icr1 como tope
-    /*WGM13 1 WGM12 1 WGM11 1 WGM10 0*/
+    //Clear on match
+    timer1->tccr1a |= (1 << COM1A1);
 
-    timer->tccr1a &= ~(1 << WGM10); //0
-    timer1->tccr1a |= (1 << WGM11); //1
+    // Modo 14: Fast PWM con tope en ICR1 (WGM13=1, WGM12=1, WGM11=1, WGM10=0)
+    timer1->tccr1a |= (1 << WGM11);
+    timer1->tccr1b |= (1 << WGM13) | (1 << WGM12);
 
-    timer1->tccr1a |= (1 << WGM12); //1
-    timer1->tccr1a |= (1 << WGM13); //1
+    //Configurar el tope (TOP) para 50Hz.
+    // 4999 en decimal es 0x1387 en hexadecimal.
 
-    /* preesacalar = 64 */
-    timer1->tccr1b |= 0x03;
+    timer1->icr1h = 0x13; 
+    timer1->icr1l = 0x87;
 
-    /* TOP guardado en ICR1 (5000 = 0x1388)*/
-    timer1->icr1h |= 0x13;
-    timer1->icr1l |= 0x88;
+    // Configurar el ciclo de trabajo inicial en 1ms (250 ticks).
+    // 250 en decimal es 0x00FA en hexadecimal.
+
+    timer1->ocr1ah = 0x00;
+    timer1->ocr1al = 0xFA;
+
+    // Arrancar el timer con preescalar de 64 (CS11 = 1, CS10 = 1)
+    timer1->tccr1b |= (1 << CS11) | (1 << CS10);
+  
 }
 
 long long get_timer()
 {
     return centesimas;
+}
+
+void actualizar_servo(uint16_t ticks)
+{
+    if (ticks < 250) ticks = 250;
+    if (ticks > 500) ticks = 500;
+
+    uint8_t byte_alto = (uint8_t)(ticks >> 8);    
+    uint8_t byte_bajo = (uint8_t)(ticks & 0xFF);
+
+    timer1->ocr1ah = byte_alto;
+    timer1->ocr1al = byte_bajo;
 }
 // ISR(TIMER2_COMPA_vect)
 ISR(TIMER1_COMPA_vect)

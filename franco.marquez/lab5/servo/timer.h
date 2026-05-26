@@ -14,6 +14,7 @@
 
 void init_timer();
 void get_timer();
+void actualizar_servo(uint16_t)
 ISR(TIMER1_COMPA_vect)
 
 #endif /* _TIMER1_H */
