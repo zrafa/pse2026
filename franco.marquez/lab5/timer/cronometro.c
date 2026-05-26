@@ -4,18 +4,18 @@ void cronometro_init(){
     init_timer();
 
 }
-int get_centesimas(){
-   return get_timer(); 
+char get_centesimas(){
+   return  (char) (get_timer() % 100); 
 }
 
-int get_minutos(){
+char get_minutos(){
     long long centesimas_totales = get_timer();
 
-    return (centesimas_totales/100)/60;
+    return (char) (centesimas_totales/100)/60;
 }
 
-int get_segundos(){
+char get_segundos(){
     long long centesimas_totales = get_timer();
 
-    return centesimas_totales/100;
+    return (char) ((centesimas_totales/100) % 60);
 }
