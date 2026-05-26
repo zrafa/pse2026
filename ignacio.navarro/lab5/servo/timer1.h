@@ -1,20 +1,16 @@
 /**********************************************************************
  *
- * Filename: timer.h
+ * Filename:    timer1.h
  * 
  * API para la aplicacion embebida 
- * META: ocultar el hardware a la aplicacion 
+ * META : ocultar el hardware a la aplicacion 
  *
  **********************************************************************/
-
-#include <stdint.h>
 
 #ifndef _TIMER1_H
 #define _TIMER1_H
 
-void init_timer();
-void get_timer();
-void actualizar_servo(uint16_t)
-ISR(TIMER1_COMPA_vect)
+void timer1_init(void);
+void servo_set_angle(uint16_t);
 
 #endif /* _TIMER1_H */
