@@ -79,10 +79,9 @@ void init_timer()
     timer1->tccr1b |= (1 << WGM13) | (1 << WGM12);
 
     //Configurar el tope (TOP) para 50Hz.
-    // 4999 en decimal es 0x1387 en hexadecimal.
-
-    timer1->icr1h = 0x13; 
-    timer1->icr1l = 0x87;
+    // 1450 0x05aa
+    timer1->icr1h = 0x05; 
+    timer1->icr1l = 0xAA;
 
     // Configurar el ciclo de trabajo inicial en 1ms (250 ticks).
     // 250 en decimal es 0x00FA en hexadecimal.
@@ -90,8 +89,8 @@ void init_timer()
     timer1->ocr1ah = 0x00;
     timer1->ocr1al = 0xFA;
 
-    // Arrancar el timer con preescalar de 64 (CS11 = 1, CS10 = 1)
-    timer1->tccr1b |= (1 << CS11) | (1 << CS10);
+    // Arrancar el timer con preescalar de 1 
+    timer1->tccr1b |=(1 << CS10);
   
 }
 
@@ -100,17 +99,6 @@ long long get_timer()
     return centesimas;
 }
 
-void actualizar_servo(uint16_t ticks)
-{
-    if (ticks < 250) ticks = 250;
-    if (ticks > 500) ticks = 500;
-
-    uint8_t byte_alto = (uint8_t)(ticks >> 8);    
-    uint8_t byte_bajo = (uint8_t)(ticks & 0xFF);
-
-    timer1->ocr1ah = byte_alto;
-    timer1->ocr1al = byte_bajo;
-}
 // ISR(TIMER2_COMPA_vect)
 ISR(TIMER1_COMPA_vect)
 { // Hace esto, cuando la interrupcion se active

@@ -34,7 +34,7 @@ typedef struct
 /* puntero a la estructura de los registros del periferico */
 uart_t *puerto_serial = (uart_t *) (0xc0);
 
-#define USART_BAUDRATE 9600
+#define USART_BAUDRATE 115200
 #define BAUD_PRESCALE (((F_CPU/(USART_BAUDRATE*16UL)))-1)
 
 #define RXEN0 4
@@ -45,14 +45,6 @@ uart_t *puerto_serial = (uart_t *) (0xc0);
 #define RXCn 7
 void serial_init() {    
 
-	/* Escribir una rutina de inicializacion */
-
-	/* El manual del atmega328p tiene un ejemplo. Adecuarla a C y
-           la estructura de datos */
-
-	/* Configurar los registros High y Low con BAUD_PRESCALE */
-	/* Configurar un frame de 8bits, con un bit de paridad y bit de stop */
-	/* Activar la recepcion y transmicion */
         /*Set baud rate */
         puerto_serial->UBRR0H = (unsigned char)(BAUD_PRESCALE>>8); // (8bits mas bajos, porque los primeros 4 son reservados)
         puerto_serial->UBRR0L = (unsigned char)BAUD_PRESCALE;
@@ -60,9 +52,6 @@ void serial_init() {
         puerto_serial->status_control_b = (1<<RXEN0)|(1<<TXEN0);
         /* Set frame format: 8data, 2stop bit */
         puerto_serial->status_control_c = (1<<USBS0)|(3<<UCSZ00);
-
-
-
 }
 
 
