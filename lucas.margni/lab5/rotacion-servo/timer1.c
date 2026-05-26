@@ -2,14 +2,14 @@
  *
  * Genera 50 interrupciones por segundo
  *
- * Modo Fast PWA
+ * Modo Fast PWM
  *
  * Reloj del sistema: 16000000 ticks/s
  * Preescalar: 64
- * 
+ *
  * 16000000 ticks/s / 64 = 250000 ticks/s
  * 250000 ticks/s / 50 ticks/s = 5000
- * 
+ *
  * Valor de TOP: 5000 (por la cuenta de arriba)
  */
 
@@ -23,18 +23,18 @@ volatile uint16_t ticks = 0;
 
 /* Estructura de datos del driver timer1 */
 typedef struct {
-    uint8_t tccr1a;     /* Timer Control Register A */
-    uint8_t tccr1b;     /* Timer Control Register B */
-    uint8_t tccr1c;     /* Timer Control Register C */
+    uint8_t tccr1a; /* Timer Control Register A */
+    uint8_t tccr1b; /* Timer Control Register B */
+    uint8_t tccr1c; /* Timer Control Register C */
     uint8_t reserved;
-    uint8_t tcnt1l;     /* Timer Register Low */
-    uint8_t tcnt1h;     /* Timer Register High */
-    uint8_t icr1l;      /* Input Capture Register Low */
-    uint8_t icr1h;      /* Input Capture Register High */
-    uint8_t ocr1al;     /* Output Compare Register A Low */
-    uint8_t ocr1ah;     /* Output Compare Register A High */
-    uint8_t ocr1bl;     /* Output Compare Register B Low */
-    uint8_t ocr1bh;     /* Output Compare Register B High */
+    uint8_t tcnt1l; /* Timer Register Low */
+    uint8_t tcnt1h; /* Timer Register High */
+    uint8_t icr1l;  /* Input Capture Register Low */
+    uint8_t icr1h;  /* Input Capture Register High */
+    uint8_t ocr1al; /* Output Compare Register A Low */
+    uint8_t ocr1ah; /* Output Compare Register A High */
+    uint8_t ocr1bl; /* Output Compare Register B Low */
+    uint8_t ocr1bh; /* Output Compare Register B High */
 } volatile timer1_t;
 
 volatile timer1_t *timer1 = (timer1_t *) 0x80;

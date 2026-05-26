@@ -2,11 +2,11 @@
  *
  * Genera 1000 interrupciones por segundo
  *
- * Modo Fast PWA
+ * Modo Fast PWM
  *
  * Reloj del sistema: 16000000 ticks/s
  * Preescalar: 64
- * 
+ *
  * 16000000 ticks/s / 64 = 250000 ticks/s
  */
 
@@ -20,14 +20,14 @@ volatile uint16_t ticks = 0;
 
 /* Estructura de datos del driver timer2 */
 typedef struct {
-    uint8_t tccr2a;     /* Timer Control Register A */
-    uint8_t tccr2b;     /* Timer Control Register B */
-    uint8_t tcnt2;      /* Timer Register */
-    uint8_t ocr2a;      /* Output Compare Register A */
-    uint8_t ocr2b;      /* Output Compare Register B */
+    uint8_t tccr2a; /* Timer Control Register A */
+    uint8_t tccr2b; /* Timer Control Register B */
+    uint8_t tcnt2;  /* Timer Register */
+    uint8_t ocr2a;  /* Output Compare Register A */
+    uint8_t ocr2b;  /* Output Compare Register B */
 } volatile timer2_t;
 
-volatile timer2_t *timer2 = (timer2_t *) 0xB0;
+volatile timer2_t *timer2 = (timer2_t *) 0xb0;
 
 /* Interrupt Mask Register */
 volatile uint8_t *timer2_timsk2 = (uint8_t *) 0x70;
