@@ -46,8 +46,10 @@ void adc_init() {
 int adc_get(char input)
 {
         /* 1. Selects which analog input is connected to the ADC */
-        //Ponemos como canal de entrada ADC2
-        adc->adc_mux |= (1 << 1);
+        if (input >= 0 && input <= 8) {
+                //Verificamos si el input es valido
+                adc->admux |= input;
+        }
 
         /* 2. Write this bit to one to start each conversion */
         adc->adc_status_control_a |= (1 << 6);
