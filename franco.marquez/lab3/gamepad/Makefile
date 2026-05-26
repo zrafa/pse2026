@@ -1,6 +1,6 @@
 CC=avr-gcc
-OBJETOS=main.o adc.o knob.o serial.o
-APP=speaker-knob
+OBJETOS=main.o serial.o pulsadores.o
+APP=gamepad
 CFLAGS=-Os -DF_CPU=16000000UL -mmcu=atmega328p 
 LDFLAGS=-mmcu=atmega328p
 FIRMWARE=imagen.hex

@@ -1,17 +1,19 @@
 /**********************************************************************
  *
- * Filename:    adc.h
+ * Filename:    serial.h
  * 
  * API para la aplicacion embebida 
  * META : ocultar el hardware a la aplicacion 
  *
  **********************************************************************/
 
-#ifndef _ADC_H
-#define _ADC_H
+#ifndef _SERIAL_H
+#define _SERIAL_H
 
-void adc_init(void);
-int adc_get(char);
-void delay_ms(int);
+
+void serial_init(void);
+void serial_put_char(char c);
+char serial_get_char(void);
+
 
 #endif /* _SERIAL_H */

@@ -11,9 +11,11 @@ typedef struct{
     uint8_t ocr2b;
 } volatile timer2;
 
-volatile timer2 *timer = (timer2 *) (0xb0);
+timer2 *timer = (timer2 *) (0xb0);
 
-char *timsk2 = (char * ) 0x70; //Mascara del timer
+char *timsk2 = (char * ) 0x70;
+
+long centesimas = 0;
 
 #define WGM20 0
 #define WGM21 1
@@ -21,10 +23,9 @@ char *timsk2 = (char * ) 0x70; //Mascara del timer
 #define CS20 0
 #define CS21 1
 #define CS22 2
-#define OCEI2A 1
+#define OCIE2A 1
 
-long long centesimas=0;
-void init_timer(){
+int init_timer(){
 
     timer->tccr2a &= ~(1<< WGM20); //Lo pongo en 0 
     timer->tccr2a |= (1<< WGM21); // Lo pongo en 1
@@ -39,16 +40,15 @@ void init_timer(){
 
     //Habilitar interrumpciones especificas del timer
 
-    *timsk2 |= (1<<OCEI2A); 
-    /*the Timer/Counter2 compare match A
-interrupt is enabled*/
+    *timsk2 |= (1 << OCIE2A);
+    //las interup globales se hacen desde el main
 }
 
-long long get_timer(){
+long get_timer()
+{
     return centesimas;
 }
-ISR(TIMER2_COMPA_vect){ //Hace esto, cuando la interrupcion se active
-    centesimas++;
 
-    if(centesimas==1000){}//Paso un segundo
+ISR(TIMER2_COMPA_vect){
+    centesimas++;
 }

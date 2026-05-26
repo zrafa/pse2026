@@ -1,0 +1,108 @@
+#include <stdint.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+// Timer 2 modificado para controlar el servomotor (usando timer 1?)
+
+/*typedef struct{
+    uint8_t tccr2a;
+    uint8_t tccr2b;
+    uint8_t tcnt2;
+    uint8_t ocr2a;
+    uint8_t ocr2b;
+} volatile timer2; */
+
+typedef struct
+{
+    uint8_t tccr1a; // 0x80
+    uint8_t tccr1b;
+    uint8_t tccr1c;
+    uint8_t reserved;
+    uint8_t tcnt1l;
+    uint8_t tcnt1h;
+    uint8_t icr1l;
+    uint8_t icr1h;
+    uint8_t ocr1al;
+    uint8_t ocr1ah;
+    uint8_t ocr1bl;
+    uint8_t ocr1bh; // 0x8B
+} volatile timer1;
+
+// volatile timer2 *timer = (timer2 *)(0xb0);
+volatile timer1 *timer1 = (timer1 *)0x80;
+
+// char *timsk2 = (char *)0x70; // Mascara del timer
+volatile uint8_t *timsk1 = (uint8_t *)0x6f;
+
+// tccr1a
+#define WGM10 0
+#define WGM11 1
+
+#define COM1A0 6
+#define COM1B0 4
+
+#define COM1A1 7
+#define COM1B1 5
+
+// tccr1b
+
+#define WGM12 3
+#define WGM13 4
+
+
+#define CS10 0
+#define CS11 1
+#define CS12 2
+
+long long centesimas = 0;
+void init_timer()
+{
+    /*   timer->tccr2a &= ~(1 << WGM20); // Lo pongo en 0
+       timer->tccr2a |= (1 << WGM21);  // Lo pongo en 1
+       timer->tccr2b &= ~(1 << WGM22);
+       timer->tccr2b |= (1 << CS20) | (1 << CS21) | (1 << CS22);
+       */
+    // 256 * 10 / 16,384 = 156,25
+    // Lo ssteamos en 155 OCR
+    // preescalar seria cs20 21 y 22 para 1024
+    // timer->ocr2a = 155;
+    // Habilitar interrumpciones especificas del timer
+    //*timsk2 |= (1 << OCEI2A);
+
+    /* modo Fast PWM (14) */
+    // COM1A1/COM1B1 COM1A0/COM1B0 Tienn que estar 0 1//
+    timer1->tccr1a |= (1 << COM1B0);
+    timer1->tccr1a |= (1 << COM1A0);
+
+    timer->tccr1a &= ~(1 << COM1A1);
+    timer->tccr1a &= ~(1 << COM1B1);
+
+    //Registro icr1 como tope
+    /*WGM13 1 WGM12 1 WGM11 1 WGM10 0*/
+
+    timer->tccr1a &= ~(1 << WGM10); //0
+    timer1->tccr1a |= (1 << WGM11); //1
+
+    timer1->tccr1a |= (1 << WGM12); //1
+    timer1->tccr1a |= (1 << WGM13); //1
+
+    /* preesacalar = 64 */
+    timer1->tccr1b |= 0x03;
+
+    /* TOP guardado en ICR1 (5000 = 0x1388)*/
+    timer1->icr1h |= 0x13;
+    timer1->icr1l |= 0x88;
+}
+
+long long get_timer()
+{
+    return centesimas;
+}
+// ISR(TIMER2_COMPA_vect)
+ISR(TIMER1_COMPA_vect)
+{ // Hace esto, cuando la interrupcion se active
+    centesimas++;
+    if (centesimas == 1000)
+    {
+    } // Paso un segundo
+}

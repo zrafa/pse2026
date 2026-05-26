@@ -19,8 +19,8 @@ int main(){
 
     while(1){
 
-        adc = adc_get(2); //puerto
-
+        adc = adc_get(2); // 2=puerto
+        //Comento esto si es el knob lineal o logaritmico
       //  aux = pow((double) val / 1023, (double) (1.0/3.14)); //Normalizarlo entre 0 y 1
 
         //aux = aux * 1023; //Psarlo a un valor grande, que no sea entre 0 y 1
