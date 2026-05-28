@@ -1,0 +1,43 @@
+#include <stdint.h>
+#include <util/delay.h>
+#include "adc.h"
+#include "serial.h"
+#include <avr/io.h>
+
+void tocar_nota(uint16_t retardo) {
+  uint16_t retardo_us = retardo/2 -80;
+  uint16_t ciclos =80000 / retardo_us;
+
+  for (uint16_t i = 0; i < ciclos; i++) {
+    PORTB |= (1 << 0);  /* Pone el Pin D8 en ALTO */
+    for (uint16_t d = 0; d < retardo_us; d++) _delay_us(1);
+     PORTB &= ~(1 << 0); /* Pone el Pin D8 en BAJO */
+    for (uint16_t d = 0; d < retardo_us; d++) _delay_us(1);
+  }
+}
+
+int main(void) {
+  serial_init();
+  adc_init();
+  /* Configuracion del pin del speaker (PB0 / Pin D8) como salida */
+  DDRB |= (1 << 0);
+  uint16_t frecuencia;
+
+    
+  while (1) {
+    // leer el PIN A0
+    frecuencia = adc_get(0);
+    
+    // se envia el valor de 0-1023:
+    char buffer[5];
+    itoa(frecuencia, buffer, 10);
+
+    for(int i=0; buffer[i] != '\0'; i++) {
+      serial_put_char(buffer[i]);
+    }
+    serial_put_char('\n');
+    tocar_nota(frecuencia);
+
+    // _delay_ms(200);
+  }
+}

@@ -1,0 +1,36 @@
+#include <stdint.h>
+#include <util/delay.h>
+#include "adc.h"
+#include "serial.h"
+#include <avr/io.h>
+
+
+
+
+int main(void) {
+    adc_init();
+    serial_init();
+
+    // Configura PD2 (pin 2 digital) como entrada para el pulsador
+    DDRD &= ~(1 << 2);
+    // Habilita resistencia Pull-up interna
+    PORTD |= (1 << 2);
+
+    while(1) {
+        // 1. Leer el Knob (Potenciómetro) en el canal 0
+      uint16_t valor_adc = adc_get(0);
+        serial_put_char(valor_adc);
+
+
+	
+        // 2. Leer el Pulsador
+        if (!(PIND & (1 << 2))) {
+            // Enviamos un caracter especial para el disparo
+            serial_put_char('s'); 
+            _delay_ms(150); // Debounce
+        }
+
+        _delay_ms(10);
+    }
+    return 0;
+}
