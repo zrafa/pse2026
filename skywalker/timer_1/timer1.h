@@ -10,3 +10,15 @@
 #define WGM12 3
 #define WGM13 4
 
+#define NORMAL 0
+#define PWM 1
+
+#define PRESCALAR_1 1
+#define PRESCALAR_8 2
+#define PRESCALAR_64 3
+#define PRESCALAR_256 4
+#define PRESCALAR_1024 5
+#define PRESCALAR_EXTERNAL 7
+
+#define A 0
+#define B 1
