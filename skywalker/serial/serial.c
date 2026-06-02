@@ -15,8 +15,8 @@
 #define BUFFER_SIZE 64
 
 volatile uint8_t rx_buffer[BUFFER_SIZE];
-volatile uint8_t rx_head = 0; // Índice de escritura (lo usa la ISR)
-volatile uint8_t rx_tail = 0; // Índice de lectura (lo usa el main)
+volatile uint8_t rx_head = 0; /* Índice de escritura (lo usa la ISR)*/
+volatile uint8_t rx_tail = 0; /*Índice de lectura (lo usa el main)*/
 
 #ifndef F_CPU
 #define F_CPU 16000000UL
@@ -46,19 +46,18 @@ uart_t* puerto_serial = (uart_t*)(0xc0);
 #define USART_BAUDRATE 9600
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
-/* Inicializa el hardware en modo por encuesta (Polling) */
-void serial_init() {
+/* Inicializa el hardware*/
+void serial_init(uint8_t interruption_on) {  /*Parametro interruption_on: 0 para modo sin interrupciones y 1 para modo con interrupciones */
   puerto_serial->baud_rate_high = (uint8_t)(BAUD_PRESCALE >> 8);
   puerto_serial->baud_rate_low = (uint8_t)(BAUD_PRESCALE);
 
-  puerto_serial->status_control_c = (1 << UCSZ01) | (1 << UCSZ00); /* 8 bits, 1 stop, no parity */
-  puerto_serial->status_control_b = (1 << RXEN0) | (1 << TXEN0);   /* Habilita TX y RX */
-}
+  puerto_serial->status_control_c = (1 << UCSZ01) | (1 << UCSZ00); 
+  puerto_serial->status_control_b = (1 << RXEN0) | (1 << TXEN0);   
 
-/* Habilita las interrupciones de recepción */
-void serial_enable_rx_interrupt(void) {
-  puerto_serial->status_control_b |= (1 << RXCIE0);
-  sei(); /* Habilita las interrupciones globales */
+  if (interruption_on) {
+    puerto_serial->status_control_b |= (1 << RXCIE0);
+    sei(); 
+  }
 }
 
 /* Se ejecuta cada vez que llega un byte */
@@ -97,10 +96,13 @@ char serial_get_char_buffered(void) {
   /* Bloqueante si el buffer está vacío */
   while (rx_head == rx_tail); 
 
+  uint8_t sreg_backup = SREG;
   cli();
+  
   char c = rx_buffer[rx_tail];
   rx_tail = (rx_tail + 1) % BUFFER_SIZE;
-  sei();
+  
+  SREG = sreg_backup;
 
   return c;
 }
@@ -113,8 +115,18 @@ void serial_put_float(float f) {
   }
 }
 
-/* Recibe un float de 4 bytes usando el buffer circular */
+/* Recibe un float de 4 bytes por encuesta */
 float serial_get_float(void) {
+  float f;
+  uint8_t* ptr = (uint8_t*)&f;
+  for (int i = 0; i < 4; i++) {
+    ptr[i] = serial_get_char();
+  }
+  return f;
+}
+
+/* Recibe un float de 4 bytes usando el buffer circular */
+float serial_get_float_buffered(void) {
   float f;
   uint8_t* ptr = (uint8_t*)&f;
   for (int i = 0; i < 4; i++) {
@@ -131,8 +143,18 @@ void serial_put_int(int16_t s) {
   }
 }
 
-/* Recibe un int de 2 bytes usando el buffer circular */
+/* Recibe un int de 2 bytes por encuesta */
 int16_t serial_get_int(void) {
+  int16_t s;
+  uint8_t* ptr = (uint8_t*)&s;
+  for (int i = 0; i < 2; i++) {
+    ptr[i] = serial_get_char();
+  }
+  return s;
+}
+
+/* Recibe un int de 2 bytes usando el buffer circular */
+int16_t serial_get_int_buffered(void) {
   int16_t s;
   uint8_t* ptr = (uint8_t*)&s;
   for (int i = 0; i < 2; i++) {
