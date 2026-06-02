@@ -45,7 +45,7 @@
 #ifndef _GPIO_H
 #define _GPIO_H
 
-int8_t gpio_input(uint8_t);
+int8_t gpio_input(uint8_t, int8_t);
 int8_t gpio_output(uint8_t);
 int8_t gpio_read(uint8_t);
 int8_t gpio_write(uint8_t, uint8_t);

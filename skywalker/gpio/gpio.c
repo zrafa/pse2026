@@ -64,7 +64,7 @@ static uint8_t gpio_valid_pins(uint8_t port)
 /* Configura el pin como entrada
  * Devuelve -1 si pin es invalido, y 0 en otro caso
  */
-int8_t gpio_input(uint8_t pin)
+int8_t gpio_input(uint8_t pin, int8_t pull_up)
 {
 	gpio_t *port = gpio_port_map(pin);
 	uint8_t pin_port = pin % 8;
@@ -74,8 +74,8 @@ int8_t gpio_input(uint8_t pin)
 
 	port->ddr &= ~(1 << pin_port);
 
-	/* se activa el pull-up */
-	port->port |= (1 << pin_port);
+	if (pull_up)
+		port->port |= (1 << pin_port);
 
 	return 0;
 }
