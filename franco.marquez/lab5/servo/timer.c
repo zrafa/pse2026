@@ -26,10 +26,10 @@ typedef struct
     uint8_t ocr1ah;
     uint8_t ocr1bl;
     uint8_t ocr1bh; // 0x8B
-} volatile timer1;
+} volatile timer1_t;
 
 // volatile timer2 *timer = (timer2 *)(0xb0);
-volatile timer1 *timer1 = (timer1 *)0x80;
+volatile timer1_t *timer1 = (timer1_t *)0x80;
 
 // char *timsk2 = (char *)0x70; // Mascara del timer
 volatile uint8_t *timsk1 = (uint8_t *)0x6f;
@@ -99,11 +99,11 @@ long long get_timer()
     return centesimas;
 }
 
-// ISR(TIMER2_COMPA_vect)
-ISR(TIMER1_COMPA_vect)
-{ // Hace esto, cuando la interrupcion se active
-    centesimas++;
-    if (centesimas == 1000)
-    {
-    } // Paso un segundo
+void actualizar_servo(uint16_t ticks){
+
+    uint8_t byte_alto = (uint8_t)(ticks >> 8);
+    uint8_t byte_bajo = (uint8_t)(ticks & 0xFF);
+
+    timer1->ocr1ah = byte_alto;
+    timer1->ocr1al = byte_bajo;
 }

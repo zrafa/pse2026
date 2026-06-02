@@ -2,14 +2,15 @@
 #include "timer.h"
 #include "adc.h"
 #include <math.h>
+#include <stdint.h>
 
-int main(){
+void main(){
 
     init_timer();
     adc_init();
 
-    float adc;
-    unsigned int val_timer;
+    uint16_t adc;
+    uint16_t val_timer;
 
     while(1){
 
@@ -27,13 +28,11 @@ int main(){
         }
             */
            
-        val_timer = 250 + (((uint32_t)adc_raw * 250) / 1023);
+        val_timer = 250 + (((uint32_t)adc * 250) / 1023);
 
         actualizar_servo(val_timer);
 
         _delay_ms(15);
 
     }
-
-    return 0;
 }

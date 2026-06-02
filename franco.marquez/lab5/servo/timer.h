@@ -13,8 +13,7 @@
 #define _TIMER1_H
 
 void init_timer();
-void get_timer();
-void actualizar_servo(uint16_t)
-ISR(TIMER1_COMPA_vect)
+long long get_timer();
+void actualizar_servo(uint16_t);
 
 #endif /* _TIMER1_H */
