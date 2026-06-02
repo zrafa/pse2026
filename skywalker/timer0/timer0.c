@@ -6,6 +6,7 @@
  */
 
 #include "timer0.h"
+#include "gpio.h"
 #include <stdint.h>
 
 typedef struct {
@@ -21,21 +22,30 @@ volatile timer0_t *timer0 = (timer2_t *) 0x44;
 /* Interrupt Mask Register */
 volatile uint8_t *timer0_timsk0 = (uint8_t *) 0x6e;
 
-volatile uint8_t value = 0;
+void (*function_a)();
+void (*function_b)();
 
-/* Rutina de atencion de interrupciones */
+/* Rutina de atencion de interrupciones de contador a */
 ISR(TIMER0_COMPA_vect)
 {
-    value++;
+        if (function_a)
+                function_a();
+}
+
+/* Rutina de atencion de interrupciones de contador b */
+ISR(TIMER0_COMPB_vect)
+{
+        if (function_b)
+                function_b();
 }
 
 /* Configura el modo y el prescalar del timer
  * Modo CTC o Fast PWM, ambos con tope OCR0A
  * Devuelve -1 si el modo o el prescalar es invalido y 0 en otro caso
  */
-int8_t timer0_init(uint8_t mode, uint8_t prescaler, uint8_t initial_top)
+int8_t timer0_init(uint8_t mode, uint8_t clock_select, uint8_t initial_top)
 {
-	if (mode > 1 || prescaler > 4)
+	if (mode > 1 || clock_select > 4)
 		return -1;
 
 	if (mode == MODE_CTC) {
@@ -45,12 +55,19 @@ int8_t timer0_init(uint8_t mode, uint8_t prescaler, uint8_t initial_top)
 	} else { /* mode == MODE_PWM */
 		timer0->tccr0a |= (1 << 1 | 1 << 0);
 		timer0->tccr0b |= (1 << 3);
+
+                /* non-inverting mode */
+                timer0->tccr0a |= (1 << 5);
+                timer0->tccr0a &= ~(1 << 4);
+
+                /* configurar puerto b de salida */
+                gpio_output(D5);
 	}
 
-        switch (prescaler) {
+        switch (clock_select) {
 		case PRESCALER_1:
                         timer0->tccr0b |= (1 << 0);
-			timer0->tccr0b &= ~(1 << 2 | 1 << 1);
+		        timer0->tccr0b &= ~(1 << 2 | 1 << 1);
                         break;
 			
 		case PRESCALER_8:
@@ -65,13 +82,23 @@ int8_t timer0_init(uint8_t mode, uint8_t prescaler, uint8_t initial_top)
 
 		case PRESCALER_256:
                         timer0->tccr0b |= (1 << 2);
-			timer0->tccr0b &= ~(1 << 1 | 1 << 0);
+		        timer0->tccr0b &= ~(1 << 1 | 1 << 0);
                         break;
 
 		case PRESCALER_1024:
                         timer0->tccr0b |= (1 << 2 | 1 << 0);
 			timer0->tccr0b &= ~(1 << 1);
                         break;
+
+                case EXTERNAL_FALLING:
+                        timer0->tccr0b |= (1 << 2 | 1 << 1);
+			timer0->tccr0b &= ~(1 << 0);
+                        break;
+
+                case EXTERNAL_RISING:
+                        timer0->tccr0b |= (1 << 2 | 1 << 1 | 1 << 0);
+                        break;
+
 	}
 
 	timer0->ocr0a = initial_top;
@@ -99,21 +126,31 @@ int8_t timer0_set_counter(uint8_t counter, uint8_t new_value)
  */
 uint8_t timer0_get_value()
 {
-        return value;
+        return timer0->tcnt0;
+}
+
+/* Escribe un valor en el contador del timer
+ */
+void timer0_write_value(uint8_t value)
+{
+        timer0->tcnt0 = value;
 }
 
 /* Habilita las interrupciones del contador pasado
  * Devuelve -1 si el contador es invalido y 0 en otro caso
  */
-int8_t timer0_enable_interrupts(uint8_t counter)
+int8_t timer0_enable_interrupts(uint8_t counter, void (*callback)())
 {
 	if (counter > 1)
 		return -1;
 
-	if (counter == COUNTER_A)
-		*timer0_timsk0 |= (1 << 1);
-	else /* counter == COUNTER_B */
+	if (counter == COUNTER_A) {
+                *timer0_timsk0 |= (1 << 1);
+                function_a = callback;
+        } else { /* counter == COUNTER_B */
 		*timer0_timsk0 |= (1 << 2);
+                function_b = callback;
+        }
 
 	return 0;
 }
@@ -126,10 +163,13 @@ int8_t timer0_disable_interrupts(uint8_t counter)
         if (counter > 1)
 		return -1;
 
-        if (counter == COUNTER_A)
+        if (counter == COUNTER_A) {
                 *timer0_timsk0 &= ~(1 << 1);
-	else /* counter == COUNTER_B */
+                function_a = NULL;
+        } else { /* counter == COUNTER_B */
                 *timer0_timsk0 &= ~(1 << 2);
+                function_b = NULL;
+        }
 
         return 0;
 }
