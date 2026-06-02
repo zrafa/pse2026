@@ -82,20 +82,20 @@ void ultrasound_init(char trigger_num, char echo_num)
 	*ddr_echo &= ~(1 << echo_bit_number);
 }
 
-int ultrasound_get_distance(void)
+int ultrasound_get(void)
 {
-	long duracion = 0;
-	int distancia = -1;
+	long duration = 0;
+	int distance = -1;
 	
 	// Asegura que el Trigger empiece en bajo
-	*puerto_trigger &= ~(1 << trigger_bit_number);
+	*port_trigger &= ~(1 << trigger_bit_number);
 	_delay_us(2); //Se usa para asegurar que el pin esté bien "limpio" en bajo antes de mandar el pulso. Es una medida de estabilidad.
 
 	// Lanzar el pulso de Trigger (10 microsegundos) pdf de ultrasonic. 
 	//Esta accion envia 8 ciclos de rafaga a 40Khz y levanta un Echo Pin
-	*puerto_trigger |= (1 << trigger_bit_number);
+	*port_trigger |= (1 << trigger_bit_number);
 	_delay_us(10); 
-	*puerto_trigger &= ~(1 << trigger_bit_number);
+	*port_trigger &= ~(1 << trigger_bit_number);
 
 	// Esperar a que el pin ECHO se ponga en ALTO (inicio del pulso)
 	uint32_t timeout = 100000;
@@ -109,20 +109,20 @@ int ultrasound_get_distance(void)
 	//  Contar cuánto tiempo el pin ECHO está en ALTO
 	// Usamos un contador y un delay de 1 us para medir el ancho del pulso
 	while (*pin_echo & (1 << echo_bit_number)) {
-		duracion++;
+		duration++;
 		_delay_us(1);
         
-		if (duracion > 30000) break; // Timeout si no hay objeto cerca
+		if (duration > 30000) break; // Timeout si no hay objeto cerca
 	}
 
-	// Cálculo de distancia
+	// Cálculo de distance
 	// El sonido tarda 58 microsegundos en ir y volver por cada cm.
-	distancia = (int)(duracion / 58);
+	distance = (int)(duration / 58);
 
 	// El sensor HC-SR04 tiene un rango de 2cm a 400cm
-	if (distancia < 2 || distancia > 400) {
+	if (distance < 2 || distance > 400) {
 		return -1;
 	}
 
-	return distancia;
+	return distance;
 }
