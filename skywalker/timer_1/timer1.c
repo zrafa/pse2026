@@ -28,7 +28,7 @@ volatile timer1_t *timer1 = (timer1_t *)0x80;
 
 volatile uint8_t *timsk1 = (uint8_t *)0x6f;
 
-void init_timer(uint8_t mode)
+void init_timer(uint8_t mode, uint8_t prescalar)
 {
     // Mode 1 = Normal
     // Mode 2 = PWM
@@ -39,10 +39,10 @@ void init_timer(uint8_t mode)
 
     switch (mode)
     {
-    case 1:
+    case NORMAL:
         // Necesita 4 pines en 0
         break;
-    case 2:
+    case PWM:
         timer1->tccr1a |= (1 << WGM11);
         timer1->tccr1b |= (1 << WGM13) | (1 << WGM12);
 
@@ -57,23 +57,28 @@ void init_timer(uint8_t mode)
         break;
     }
 
-    // Arrancar el timer con preescalar de 1
-    timer1->tccr1b |= (1 << CS10);
-    // Preescalar es opcional?
+    // Ajusta el preescalar o si es fuente externa
+    timer1->tccr1b = prescalar;
 }
 
-void get_timer()
+uint16_t get_timer()
 {
+	return (((uint16_t) timer1->tcnt1h) << 8) | timer1->tcntl1l;
 }
 
-void configure_comparator(uint16_t top)
+void configure_comparator(uint16_t top, uint8_t mode)
 {
     // top de la amplitud del ciclo?
     uint8_t byte_high = (uint8_t)(top >> 8);
     uint8_t byte_low = (uint8_t)(top & 0xFF);
 
-    timer1->ocr1ah = byte_high;
-    timer1->ocr1al = byte_low;
+	if(mode == A){
+    		timer1->ocr1ah = byte_high;
+    		timer1->ocr1al = byte_low;
+	} else if(mode == B){
+    		timer1->ocr1bh = byte_high;
+    		timer1->ocr1bl = byte_low;
+	}
 }
 
 void configure_top(uint16_t top)
