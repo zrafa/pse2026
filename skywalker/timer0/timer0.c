@@ -7,7 +7,10 @@
 
 #include "timer0.h"
 #include "gpio.h"
+
 #include <stdint.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 typedef struct {
 	uint8_t tccr0a;     /* Timer Control Register A */
@@ -17,7 +20,7 @@ typedef struct {
 	uint8_t ocr0b;      /* Output Compare Register B */
 } volatile timer0_t;
 
-volatile timer0_t *timer0 = (timer2_t *) 0x44;
+volatile timer0_t *timer0 = (timer0_t *) 0x44;
 
 /* Interrupt Mask Register */
 volatile uint8_t *timer0_timsk0 = (uint8_t *) 0x6e;
