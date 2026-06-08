@@ -28,8 +28,7 @@ void main()
 
     sei();
 
-    while (1)
-    {
+    while (1) {
         /* centisegundos */
         int cs = simulated_ticks % 100;
         cronometro[7] = '0' + (cs % 10);
