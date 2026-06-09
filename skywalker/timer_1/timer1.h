@@ -4,6 +4,9 @@
 #define COM1A0 6
 #define COM1A1 7
 
+#define COM1B0 4
+#define COM1B1 5
+
 //(TCCR1B)
 #define CS10 0
 #define CS11 1
