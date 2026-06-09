@@ -1,5 +1,5 @@
 CC=avr-gcc
-OBJETOS=timer0.o adc.o main.o
+OBJETOS=timer0.o adc.o main.o gpio.o
 APP=motor
 CFLAGS=-Os -DF_CPU=16000000UL -mmcu=atmega328p 
 LDFLAGS=-mmcu=atmega328p
