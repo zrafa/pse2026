@@ -31,7 +31,7 @@ void serial_put_char(char c);
 /**
  * Transmite una cadena de caracteres terminada en null.
  */
-void serial_put_str(const char* str);
+void serial_put_str(const char *str);
 
 /**
  * Lee un carácter directamente del hardware por encuesta (polling).
