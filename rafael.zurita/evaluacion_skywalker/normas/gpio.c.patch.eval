@@ -1,0 +1,74 @@
+
+WARNING: 'adress' may be misspelled - perhaps 'address'?
+#16: FILE: gpio/gpio.c:13:
++	uint8_t pin;    /* Input pin adress (valores que recibe de entrada) */
+ 	                             ^^^^^^
+
+ERROR: trailing whitespace
+#74: FILE: gpio/gpio.c:71:
++    $
+
+WARNING: please, no spaces at the start of a line
+#74: FILE: gpio/gpio.c:71:
++    $
+
+ERROR: trailing whitespace
+#93: FILE: gpio/gpio.c:90:
++    $
+
+WARNING: please, no spaces at the start of a line
+#93: FILE: gpio/gpio.c:90:
++    $
+
+ERROR: code indent should use tabs where possible
+#99: FILE: gpio/gpio.c:96:
++    ^Ireturn 0;$
+
+WARNING: please, no space before tabs
+#99: FILE: gpio/gpio.c:96:
++    ^Ireturn 0;$
+
+WARNING: please, no spaces at the start of a line
+#99: FILE: gpio/gpio.c:96:
++    ^Ireturn 0;$
+
+ERROR: trailing whitespace
+#109: FILE: gpio/gpio.c:106:
++    $
+
+WARNING: please, no spaces at the start of a line
+#109: FILE: gpio/gpio.c:106:
++    $
+
+ERROR: trailing whitespace
+#123: FILE: gpio/gpio.c:120:
++    $
+
+WARNING: please, no spaces at the start of a line
+#123: FILE: gpio/gpio.c:120:
++    $
+
+ERROR: trailing whitespace
+#143: FILE: gpio/gpio.c:140:
++    $
+
+WARNING: please, no spaces at the start of a line
+#143: FILE: gpio/gpio.c:140:
++    $
+
+ERROR: trailing whitespace
+#159: FILE: gpio/gpio.c:156:
++    $
+
+WARNING: please, no spaces at the start of a line
+#159: FILE: gpio/gpio.c:156:
++    $
+
+ERROR: trailing whitespace
+#174: FILE: gpio/gpio.c:171:
++    $
+
+WARNING: please, no spaces at the start of a line
+#174: FILE: gpio/gpio.c:171:
++    $
+

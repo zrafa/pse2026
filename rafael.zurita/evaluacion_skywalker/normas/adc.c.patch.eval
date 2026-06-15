@@ -1,0 +1,18 @@
+
+WARNING: Block comments use * on subsequent lines
+#5: FILE: adc/adc.c:2:
++/*
++delay_ms() (por software sin avr libc),
+
+
+WARNING: braces {} are not necessary for single statement blocks
+#73: FILE: adc/adc.c:70:
++	if (pin > 8 || pin < 0) {
++		return -1;
++	}
+
+WARNING: Missing a blank line after declarations
+#94: FILE: adc/adc.c:91:
++	uint16_t data = adc->adcl;
++	data += ((adc->adch) & (0b00000011)) * 256;
+

@@ -1,0 +1,11 @@
+
+ERROR: Bad function definition - uint16_t get_timer() should probably be uint16_t get_timer(void)
+#61: FILE: timer_1/timer1.c:58:
++uint16_t get_timer()
+
+WARNING: braces {} are not necessary for single statement blocks
+#71: FILE: timer_1/timer1.c:68:
++	if (mode != A && mode != B) {
++		return -1;
++	}
+

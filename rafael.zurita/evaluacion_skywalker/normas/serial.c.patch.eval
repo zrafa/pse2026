@@ -1,0 +1,557 @@
+
+ERROR: do not initialise globals to 0
+#21: FILE: serial/serial.c:18:
++volatile uint8_t rx_head = 0; /* Índice de escritura (lo usa la ISR)*/
+
+ERROR: do not initialise globals to 0
+#22: FILE: serial/serial.c:19:
++volatile uint8_t rx_tail = 0; /*Índice de lectura (lo usa el main)*/
+
+WARNING: please, no spaces at the start of a line
+#38: FILE: serial/serial.c:35:
++  uint8_t status_control_a; /* 0xC0: UCSR0A */$
+
+WARNING: please, no spaces at the start of a line
+#39: FILE: serial/serial.c:36:
++  uint8_t status_control_b; /* 0xC1: UCSR0B */$
+
+WARNING: please, no spaces at the start of a line
+#40: FILE: serial/serial.c:37:
++  uint8_t status_control_c; /* 0xC2: UCSR0C */$
+
+WARNING: please, no spaces at the start of a line
+#41: FILE: serial/serial.c:38:
++  uint8_t reserved;         /* 0xC3: espacio reservado*/$
+
+WARNING: please, no spaces at the start of a line
+#42: FILE: serial/serial.c:39:
++  uint8_t baud_rate_low;    /* 0xC4: UBRR0L */$
+
+WARNING: please, no spaces at the start of a line
+#43: FILE: serial/serial.c:40:
++  uint8_t baud_rate_high;   /* 0xC5: UBRR0H */$
+
+WARNING: please, no spaces at the start of a line
+#44: FILE: serial/serial.c:41:
++  uint8_t data_es;          /* 0xC6: UDR0 */$
+
+
+ERROR: "(foo*)" should be "(foo *)"
+#47: FILE: serial/serial.c:44:
++uart_t* puerto_serial = (uart_t*)(0xc0);
+
+ERROR: "foo* bar" should be "foo *bar"
+#47: FILE: serial/serial.c:44:
++uart_t* puerto_serial = (uart_t*)(0xc0);
+
+WARNING: line length of 140 exceeds 100 columns
+#53: FILE: serial/serial.c:50:
++void serial_init(uint8_t interruption_on) {  /*Parametro interruption_on: 0 para modo sin interrupciones y 1 para modo con interrupciones */
+
+ERROR: open brace '{' following function definitions go on the next line
+#53: FILE: serial/serial.c:50:
++void serial_init(uint8_t interruption_on) {  /*Parametro interruption_on: 0 para modo sin interrupciones y 1 para modo con interrupciones */
+
+WARNING: please, no spaces at the start of a line
+#54: FILE: serial/serial.c:51:
++  puerto_serial->baud_rate_high = (uint8_t)(BAUD_PRESCALE >> 8);$
+
+WARNING: please, no spaces at the start of a line
+#55: FILE: serial/serial.c:52:
++  puerto_serial->baud_rate_low = (uint8_t)(BAUD_PRESCALE);$
+
+ERROR: trailing whitespace
+#57: FILE: serial/serial.c:54:
++  puerto_serial->status_control_c = (1 << UCSZ01) | (1 << UCSZ00); $
+
+WARNING: please, no spaces at the start of a line
+#57: FILE: serial/serial.c:54:
++  puerto_serial->status_control_c = (1 << UCSZ01) | (1 << UCSZ00); $
+
+ERROR: trailing whitespace
+#58: FILE: serial/serial.c:55:
++  puerto_serial->status_control_b = (1 << RXEN0) | (1 << TXEN0);   $
+
+WARNING: please, no spaces at the start of a line
+#58: FILE: serial/serial.c:55:
++  puerto_serial->status_control_b = (1 << RXEN0) | (1 << TXEN0);   $
+
+WARNING: please, no spaces at the start of a line
+#60: FILE: serial/serial.c:57:
++  if (interruption_on) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#60: FILE: serial/serial.c:57:
++  if (interruption_on) {
++    puerto_serial->status_control_b |= (1 << RXCIE0);
+
+WARNING: please, no spaces at the start of a line
+#61: FILE: serial/serial.c:58:
++    puerto_serial->status_control_b |= (1 << RXCIE0);$
+
+ERROR: trailing whitespace
+#62: FILE: serial/serial.c:59:
++    sei(); $
+
+WARNING: please, no spaces at the start of a line
+#62: FILE: serial/serial.c:59:
++    sei(); $
+
+WARNING: please, no spaces at the start of a line
+#63: FILE: serial/serial.c:60:
++  }$
+
+WARNING: please, no spaces at the start of a line
+#68: FILE: serial/serial.c:65:
++  uint8_t data = puerto_serial->data_es;$
+
+WARNING: please, no spaces at the start of a line
+#69: FILE: serial/serial.c:66:
++  uint8_t next_head = (rx_head + 1) % BUFFER_SIZE;$
+
+WARNING: please, no spaces at the start of a line
+#72: FILE: serial/serial.c:69:
++  if (next_head != rx_tail) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#72: FILE: serial/serial.c:69:
++  if (next_head != rx_tail) {
++    rx_buffer[rx_head] = data;
+
+WARNING: please, no spaces at the start of a line
+#73: FILE: serial/serial.c:70:
++    rx_buffer[rx_head] = data;$
+
+WARNING: please, no spaces at the start of a line
+#74: FILE: serial/serial.c:71:
++    rx_head = next_head;$
+
+WARNING: please, no spaces at the start of a line
+#75: FILE: serial/serial.c:72:
++  }$
+
+ERROR: open brace '{' following function definitions go on the next line
+#79: FILE: serial/serial.c:76:
++void serial_put_char(char c) {
+
+WARNING: please, no spaces at the start of a line
+#80: FILE: serial/serial.c:77:
++  while (!(puerto_serial->status_control_a & (1 << UDRE0)));$
+
+ERROR: trailing statements should be on next line
+#80: FILE: serial/serial.c:77:
++  while (!(puerto_serial->status_control_a & (1 << UDRE0)));
+
+WARNING: please, no spaces at the start of a line
+#81: FILE: serial/serial.c:78:
++  puerto_serial->data_es = c;$
+
+ERROR: "foo* bar" should be "foo *bar"
+#85: FILE: serial/serial.c:82:
++void serial_put_str(const char* str) {
+
+ERROR: open brace '{' following function definitions go on the next line
+#85: FILE: serial/serial.c:82:
++void serial_put_str(const char* str) {
+
+WARNING: please, no spaces at the start of a line
+#86: FILE: serial/serial.c:83:
++  while (*str) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#86: FILE: serial/serial.c:83:
++  while (*str) {
++    serial_put_char(*str++);
+
+WARNING: braces {} are not necessary for single statement blocks
+#86: FILE: serial/serial.c:83:
++  while (*str) {
++    serial_put_char(*str++);
++  }
+
+WARNING: please, no spaces at the start of a line
+#87: FILE: serial/serial.c:84:
++    serial_put_char(*str++);$
+
+WARNING: please, no spaces at the start of a line
+#88: FILE: serial/serial.c:85:
++  }$
+
+ERROR: open brace '{' following function definitions go on the next line
+#92: FILE: serial/serial.c:89:
++char serial_get_char(void) {
+
+WARNING: please, no spaces at the start of a line
+#93: FILE: serial/serial.c:90:
++  while (!(puerto_serial->status_control_a & (1 << RXC0)));$
+
+ERROR: trailing statements should be on next line
+#93: FILE: serial/serial.c:90:
++  while (!(puerto_serial->status_control_a & (1 << RXC0)));
+
+WARNING: please, no spaces at the start of a line
+#94: FILE: serial/serial.c:91:
++  return puerto_serial->data_es;$
+
+ERROR: open brace '{' following function definitions go on the next line
+#98: FILE: serial/serial.c:95:
++char serial_get_char_buffered(void) {
+
+ERROR: trailing whitespace
+#100: FILE: serial/serial.c:97:
++  while (rx_head == rx_tail); $
+
+WARNING: please, no spaces at the start of a line
+#100: FILE: serial/serial.c:97:
++  while (rx_head == rx_tail); $
+
+ERROR: trailing statements should be on next line
+#100: FILE: serial/serial.c:97:
++  while (rx_head == rx_tail); 
+
+WARNING: please, no spaces at the start of a line
+#102: FILE: serial/serial.c:99:
++  uint8_t sreg_backup = SREG;$
+
+WARNING: Missing a blank line after declarations
+#103: FILE: serial/serial.c:100:
++  uint8_t sreg_backup = SREG;
++  cli();
+
+WARNING: please, no spaces at the start of a line
+#103: FILE: serial/serial.c:100:
++  cli();$
+
+ERROR: trailing whitespace
+#104: FILE: serial/serial.c:101:
++  $
+
+WARNING: please, no spaces at the start of a line
+#104: FILE: serial/serial.c:101:
++  $
+
+WARNING: please, no spaces at the start of a line
+#105: FILE: serial/serial.c:102:
++  char c = rx_buffer[rx_tail];$
+
+WARNING: Missing a blank line after declarations
+#106: FILE: serial/serial.c:103:
++  char c = rx_buffer[rx_tail];
++  rx_tail = (rx_tail + 1) % BUFFER_SIZE;
+
+WARNING: please, no spaces at the start of a line
+#106: FILE: serial/serial.c:103:
++  rx_tail = (rx_tail + 1) % BUFFER_SIZE;$
+
+ERROR: trailing whitespace
+#107: FILE: serial/serial.c:104:
++  $
+
+WARNING: please, no spaces at the start of a line
+#107: FILE: serial/serial.c:104:
++  $
+
+WARNING: please, no spaces at the start of a line
+#108: FILE: serial/serial.c:105:
++  SREG = sreg_backup;$
+
+WARNING: please, no spaces at the start of a line
+#110: FILE: serial/serial.c:107:
++  return c;$
+
+ERROR: open brace '{' following function definitions go on the next line
+#114: FILE: serial/serial.c:111:
++void serial_put_float(float f) {
+
+WARNING: please, no spaces at the start of a line
+#115: FILE: serial/serial.c:112:
++  uint8_t* ptr = (uint8_t*)&f;$
+
+ERROR: "(foo*)" should be "(foo *)"
+#115: FILE: serial/serial.c:112:
++  uint8_t* ptr = (uint8_t*)&f;
+
+ERROR: "foo* bar" should be "foo *bar"
+#115: FILE: serial/serial.c:112:
++  uint8_t* ptr = (uint8_t*)&f;
+
+WARNING: Missing a blank line after declarations
+#116: FILE: serial/serial.c:113:
++  uint8_t* ptr = (uint8_t*)&f;
++  for (int i = 0; i < 4; i++) {
+
+WARNING: please, no spaces at the start of a line
+#116: FILE: serial/serial.c:113:
++  for (int i = 0; i < 4; i++) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#116: FILE: serial/serial.c:113:
++  for (int i = 0; i < 4; i++) {
++    serial_put_char(ptr[i]);
+
+WARNING: braces {} are not necessary for single statement blocks
+#116: FILE: serial/serial.c:113:
++  for (int i = 0; i < 4; i++) {
++    serial_put_char(ptr[i]);
++  }
+
+WARNING: please, no spaces at the start of a line
+#117: FILE: serial/serial.c:114:
++    serial_put_char(ptr[i]);$
+
+WARNING: please, no spaces at the start of a line
+#118: FILE: serial/serial.c:115:
++  }$
+
+ERROR: open brace '{' following function definitions go on the next line
+#122: FILE: serial/serial.c:119:
++float serial_get_float(void) {
+
+WARNING: please, no spaces at the start of a line
+#123: FILE: serial/serial.c:120:
++  float f;$
+
+WARNING: please, no spaces at the start of a line
+#124: FILE: serial/serial.c:121:
++  uint8_t* ptr = (uint8_t*)&f;$
+
+ERROR: "(foo*)" should be "(foo *)"
+#124: FILE: serial/serial.c:121:
++  uint8_t* ptr = (uint8_t*)&f;
+
+ERROR: "foo* bar" should be "foo *bar"
+#124: FILE: serial/serial.c:121:
++  uint8_t* ptr = (uint8_t*)&f;
+
+WARNING: Missing a blank line after declarations
+#125: FILE: serial/serial.c:122:
++  uint8_t* ptr = (uint8_t*)&f;
++  for (int i = 0; i < 4; i++) {
+
+WARNING: please, no spaces at the start of a line
+#125: FILE: serial/serial.c:122:
++  for (int i = 0; i < 4; i++) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#125: FILE: serial/serial.c:122:
++  for (int i = 0; i < 4; i++) {
++    ptr[i] = serial_get_char();
+
+WARNING: braces {} are not necessary for single statement blocks
+#125: FILE: serial/serial.c:122:
++  for (int i = 0; i < 4; i++) {
++    ptr[i] = serial_get_char();
++  }
+
+WARNING: please, no spaces at the start of a line
+#126: FILE: serial/serial.c:123:
++    ptr[i] = serial_get_char();$
+
+WARNING: please, no spaces at the start of a line
+#127: FILE: serial/serial.c:124:
++  }$
+
+WARNING: please, no spaces at the start of a line
+#128: FILE: serial/serial.c:125:
++  return f;$
+
+ERROR: open brace '{' following function definitions go on the next line
+#132: FILE: serial/serial.c:129:
++float serial_get_float_buffered(void) {
+
+WARNING: please, no spaces at the start of a line
+#133: FILE: serial/serial.c:130:
++  float f;$
+
+WARNING: please, no spaces at the start of a line
+#134: FILE: serial/serial.c:131:
++  uint8_t* ptr = (uint8_t*)&f;$
+
+ERROR: "(foo*)" should be "(foo *)"
+#134: FILE: serial/serial.c:131:
++  uint8_t* ptr = (uint8_t*)&f;
+
+ERROR: "foo* bar" should be "foo *bar"
+#134: FILE: serial/serial.c:131:
++  uint8_t* ptr = (uint8_t*)&f;
+
+WARNING: Missing a blank line after declarations
+#135: FILE: serial/serial.c:132:
++  uint8_t* ptr = (uint8_t*)&f;
++  for (int i = 0; i < 4; i++) {
+
+WARNING: please, no spaces at the start of a line
+#135: FILE: serial/serial.c:132:
++  for (int i = 0; i < 4; i++) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#135: FILE: serial/serial.c:132:
++  for (int i = 0; i < 4; i++) {
++    ptr[i] = serial_get_char_buffered();
+
+WARNING: braces {} are not necessary for single statement blocks
+#135: FILE: serial/serial.c:132:
++  for (int i = 0; i < 4; i++) {
++    ptr[i] = serial_get_char_buffered();
++  }
+
+WARNING: please, no spaces at the start of a line
+#136: FILE: serial/serial.c:133:
++    ptr[i] = serial_get_char_buffered();$
+
+WARNING: please, no spaces at the start of a line
+#137: FILE: serial/serial.c:134:
++  }$
+
+WARNING: please, no spaces at the start of a line
+#138: FILE: serial/serial.c:135:
++  return f;$
+
+ERROR: open brace '{' following function definitions go on the next line
+#142: FILE: serial/serial.c:139:
++void serial_put_int(int16_t s) {
+
+WARNING: please, no spaces at the start of a line
+#143: FILE: serial/serial.c:140:
++  uint8_t* ptr = (uint8_t*)&s;$
+
+ERROR: "(foo*)" should be "(foo *)"
+#143: FILE: serial/serial.c:140:
++  uint8_t* ptr = (uint8_t*)&s;
+
+ERROR: "foo* bar" should be "foo *bar"
+#143: FILE: serial/serial.c:140:
++  uint8_t* ptr = (uint8_t*)&s;
+
+WARNING: Missing a blank line after declarations
+#144: FILE: serial/serial.c:141:
++  uint8_t* ptr = (uint8_t*)&s;
++  for (int i = 0; i < 2; i++) {
+
+WARNING: please, no spaces at the start of a line
+#144: FILE: serial/serial.c:141:
++  for (int i = 0; i < 2; i++) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#144: FILE: serial/serial.c:141:
++  for (int i = 0; i < 2; i++) {
++    serial_put_char(ptr[i]);
+
+WARNING: braces {} are not necessary for single statement blocks
+#144: FILE: serial/serial.c:141:
++  for (int i = 0; i < 2; i++) {
++    serial_put_char(ptr[i]);
++  }
+
+WARNING: please, no spaces at the start of a line
+#145: FILE: serial/serial.c:142:
++    serial_put_char(ptr[i]);$
+
+WARNING: please, no spaces at the start of a line
+#146: FILE: serial/serial.c:143:
++  }$
+
+ERROR: open brace '{' following function definitions go on the next line
+#150: FILE: serial/serial.c:147:
++int16_t serial_get_int(void) {
+
+WARNING: please, no spaces at the start of a line
+#151: FILE: serial/serial.c:148:
++  int16_t s;$
+
+WARNING: please, no spaces at the start of a line
+#152: FILE: serial/serial.c:149:
++  uint8_t* ptr = (uint8_t*)&s;$
+
+ERROR: "(foo*)" should be "(foo *)"
+#152: FILE: serial/serial.c:149:
++  uint8_t* ptr = (uint8_t*)&s;
+
+ERROR: "foo* bar" should be "foo *bar"
+#152: FILE: serial/serial.c:149:
++  uint8_t* ptr = (uint8_t*)&s;
+
+WARNING: Missing a blank line after declarations
+#153: FILE: serial/serial.c:150:
++  uint8_t* ptr = (uint8_t*)&s;
++  for (int i = 0; i < 2; i++) {
+
+WARNING: please, no spaces at the start of a line
+#153: FILE: serial/serial.c:150:
++  for (int i = 0; i < 2; i++) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#153: FILE: serial/serial.c:150:
++  for (int i = 0; i < 2; i++) {
++    ptr[i] = serial_get_char();
+
+WARNING: braces {} are not necessary for single statement blocks
+#153: FILE: serial/serial.c:150:
++  for (int i = 0; i < 2; i++) {
++    ptr[i] = serial_get_char();
++  }
+
+WARNING: please, no spaces at the start of a line
+#154: FILE: serial/serial.c:151:
++    ptr[i] = serial_get_char();$
+
+WARNING: please, no spaces at the start of a line
+#155: FILE: serial/serial.c:152:
++  }$
+
+WARNING: please, no spaces at the start of a line
+#156: FILE: serial/serial.c:153:
++  return s;$
+
+ERROR: open brace '{' following function definitions go on the next line
+#160: FILE: serial/serial.c:157:
++int16_t serial_get_int_buffered(void) {
+
+WARNING: please, no spaces at the start of a line
+#161: FILE: serial/serial.c:158:
++  int16_t s;$
+
+WARNING: please, no spaces at the start of a line
+#162: FILE: serial/serial.c:159:
++  uint8_t* ptr = (uint8_t*)&s;$
+
+ERROR: "(foo*)" should be "(foo *)"
+#162: FILE: serial/serial.c:159:
++  uint8_t* ptr = (uint8_t*)&s;
+
+ERROR: "foo* bar" should be "foo *bar"
+#162: FILE: serial/serial.c:159:
++  uint8_t* ptr = (uint8_t*)&s;
+
+WARNING: Missing a blank line after declarations
+#163: FILE: serial/serial.c:160:
++  uint8_t* ptr = (uint8_t*)&s;
++  for (int i = 0; i < 2; i++) {
+
+WARNING: please, no spaces at the start of a line
+#163: FILE: serial/serial.c:160:
++  for (int i = 0; i < 2; i++) {$
+
+WARNING: suspect code indent for conditional statements (2, 4)
+#163: FILE: serial/serial.c:160:
++  for (int i = 0; i < 2; i++) {
++    ptr[i] = serial_get_char_buffered();
+
+WARNING: braces {} are not necessary for single statement blocks
+#163: FILE: serial/serial.c:160:
++  for (int i = 0; i < 2; i++) {
++    ptr[i] = serial_get_char_buffered();
++  }
+
+WARNING: please, no spaces at the start of a line
+#164: FILE: serial/serial.c:161:
++    ptr[i] = serial_get_char_buffered();$
+
+WARNING: please, no spaces at the start of a line
+#165: FILE: serial/serial.c:162:
++  }$
+
+WARNING: please, no spaces at the start of a line
+#166: FILE: serial/serial.c:163:
++  return s;$
+

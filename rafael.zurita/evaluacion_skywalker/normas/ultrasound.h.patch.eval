@@ -1,0 +1,29 @@
+
+ERROR: trailing whitespace
+#6: FILE: ultrasound/ultrasound.h:3:
++#define PUERTO_D 0x2B  $
+
+ERROR: trailing whitespace
+#9: FILE: ultrasound/ultrasound.h:6:
++#define PUERTO_C 0x28  $
+
+ERROR: trailing whitespace
+#12: FILE: ultrasound/ultrasound.h:9:
++#define PUERTO_B 0x25  $
+
+WARNING: function definition argument 'char' should also have an identifier name
+#20: FILE: ultrasound/ultrasound.h:17:
++void ultrasound_init(char, char);
+
+WARNING: function definition argument 'char' should also have an identifier name
+#20: FILE: ultrasound/ultrasound.h:17:
++void ultrasound_init(char, char);
+
+ERROR: Bad function definition - int ultrasound_get() should probably be int ultrasound_get(void)
+#21: FILE: ultrasound/ultrasound.h:18:
++int ultrasound_get();
+
+ERROR: trailing whitespace
+#23: FILE: ultrasound/ultrasound.h:20:
++#endif $
+

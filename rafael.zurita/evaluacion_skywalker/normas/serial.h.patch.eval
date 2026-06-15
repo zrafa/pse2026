@@ -1,0 +1,5 @@
+
+ERROR: "foo* bar" should be "foo *bar"
+#37: FILE: serial/serial.h:34:
++void serial_put_str(const char* str);
+

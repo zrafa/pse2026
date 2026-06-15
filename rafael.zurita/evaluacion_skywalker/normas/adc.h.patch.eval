@@ -1,0 +1,25 @@
+
+ERROR: trailing whitespace
+#7: FILE: adc/adc.h:4:
++ * $
+
+ERROR: trailing whitespace
+#8: FILE: adc/adc.h:5:
++ * API para la aplicacion embebida $
+
+ERROR: trailing whitespace
+#9: FILE: adc/adc.h:6:
++ * META : ocultar el hardware a la aplicacion $
+
+WARNING: function definition argument 'char' should also have an identifier name
+#33: FILE: adc/adc.h:30:
++int adc_get(char);
+
+ERROR: Bad function definition - void delay_ms() should probably be void delay_ms(void)
+#34: FILE: adc/adc.h:31:
++void delay_ms();
+
+ERROR: trailing whitespace
+#36: FILE: adc/adc.h:33:
++#endif $
+

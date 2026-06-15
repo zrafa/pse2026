@@ -1,0 +1,362 @@
+
+ERROR: code indent should use tabs where possible
+#37: FILE: timer0/timer0.c:34:
++        if (function_a)$
+
+WARNING: please, no spaces at the start of a line
+#37: FILE: timer0/timer0.c:34:
++        if (function_a)$
+
+ERROR: code indent should use tabs where possible
+#38: FILE: timer0/timer0.c:35:
++                function_a();$
+
+WARNING: please, no spaces at the start of a line
+#38: FILE: timer0/timer0.c:35:
++                function_a();$
+
+ERROR: code indent should use tabs where possible
+#44: FILE: timer0/timer0.c:41:
++        if (function_b)$
+
+WARNING: please, no spaces at the start of a line
+#44: FILE: timer0/timer0.c:41:
++        if (function_b)$
+
+ERROR: code indent should use tabs where possible
+#45: FILE: timer0/timer0.c:42:
++                function_b();$
+
+WARNING: please, no spaces at the start of a line
+#45: FILE: timer0/timer0.c:42:
++                function_b();$
+
+ERROR: code indent should use tabs where possible
+#65: FILE: timer0/timer0.c:62:
++                /* non-inverting mode */$
+
+ERROR: code indent should use tabs where possible
+#66: FILE: timer0/timer0.c:63:
++                timer0->tccr0a |= (1 << 5);$
+
+WARNING: please, no spaces at the start of a line
+#66: FILE: timer0/timer0.c:63:
++                timer0->tccr0a |= (1 << 5);$
+
+ERROR: code indent should use tabs where possible
+#67: FILE: timer0/timer0.c:64:
++                timer0->tccr0a &= ~(1 << 4);$
+
+WARNING: please, no spaces at the start of a line
+#67: FILE: timer0/timer0.c:64:
++                timer0->tccr0a &= ~(1 << 4);$
+
+ERROR: code indent should use tabs where possible
+#69: FILE: timer0/timer0.c:66:
++                /* configurar puerto b de salida */$
+
+ERROR: code indent should use tabs where possible
+#70: FILE: timer0/timer0.c:67:
++                gpio_output(D5);$
+
+WARNING: please, no spaces at the start of a line
+#70: FILE: timer0/timer0.c:67:
++                gpio_output(D5);$
+
+ERROR: code indent should use tabs where possible
+#73: FILE: timer0/timer0.c:70:
++        switch (clock_select) {$
+
+WARNING: please, no spaces at the start of a line
+#73: FILE: timer0/timer0.c:70:
++        switch (clock_select) {$
+
+ERROR: switch and case should be at the same indent
+#73: FILE: timer0/timer0.c:70:
++        switch (clock_select) {
++		case PRESCALER_1:
+[...]
++		case PRESCALER_8:
+[...]
++		case PRESCALER_64:
+[...]
++		case PRESCALER_256:
+[...]
++		case PRESCALER_1024:
+[...]
++                case EXTERNAL_FALLING:
+[...]
++                case EXTERNAL_RISING:
+
+ERROR: code indent should use tabs where possible
+#75: FILE: timer0/timer0.c:72:
++                        timer0->tccr0b |= (1 << 0);$
+
+WARNING: please, no spaces at the start of a line
+#75: FILE: timer0/timer0.c:72:
++                        timer0->tccr0b |= (1 << 0);$
+
+ERROR: code indent should use tabs where possible
+#76: FILE: timer0/timer0.c:73:
++^I^I        timer0->tccr0b &= ~(1 << 2 | 1 << 1);$
+
+ERROR: code indent should use tabs where possible
+#77: FILE: timer0/timer0.c:74:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#77: FILE: timer0/timer0.c:74:
++                        break;$
+
+ERROR: trailing whitespace
+#78: FILE: timer0/timer0.c:75:
++^I^I^I$
+
+ERROR: code indent should use tabs where possible
+#80: FILE: timer0/timer0.c:77:
++                        timer0->tccr0b |= (1 << 1);$
+
+WARNING: please, no spaces at the start of a line
+#80: FILE: timer0/timer0.c:77:
++                        timer0->tccr0b |= (1 << 1);$
+
+ERROR: code indent should use tabs where possible
+#82: FILE: timer0/timer0.c:79:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#82: FILE: timer0/timer0.c:79:
++                        break;$
+
+ERROR: code indent should use tabs where possible
+#87: FILE: timer0/timer0.c:84:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#87: FILE: timer0/timer0.c:84:
++                        break;$
+
+ERROR: code indent should use tabs where possible
+#90: FILE: timer0/timer0.c:87:
++                        timer0->tccr0b |= (1 << 2);$
+
+WARNING: please, no spaces at the start of a line
+#90: FILE: timer0/timer0.c:87:
++                        timer0->tccr0b |= (1 << 2);$
+
+ERROR: code indent should use tabs where possible
+#91: FILE: timer0/timer0.c:88:
++^I^I        timer0->tccr0b &= ~(1 << 1 | 1 << 0);$
+
+ERROR: code indent should use tabs where possible
+#92: FILE: timer0/timer0.c:89:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#92: FILE: timer0/timer0.c:89:
++                        break;$
+
+ERROR: code indent should use tabs where possible
+#95: FILE: timer0/timer0.c:92:
++                        timer0->tccr0b |= (1 << 2 | 1 << 0);$
+
+WARNING: please, no spaces at the start of a line
+#95: FILE: timer0/timer0.c:92:
++                        timer0->tccr0b |= (1 << 2 | 1 << 0);$
+
+ERROR: code indent should use tabs where possible
+#97: FILE: timer0/timer0.c:94:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#97: FILE: timer0/timer0.c:94:
++                        break;$
+
+ERROR: code indent should use tabs where possible
+#99: FILE: timer0/timer0.c:96:
++                case EXTERNAL_FALLING:$
+
+WARNING: please, no spaces at the start of a line
+#99: FILE: timer0/timer0.c:96:
++                case EXTERNAL_FALLING:$
+
+ERROR: code indent should use tabs where possible
+#100: FILE: timer0/timer0.c:97:
++                        timer0->tccr0b |= (1 << 2 | 1 << 1);$
+
+WARNING: please, no spaces at the start of a line
+#100: FILE: timer0/timer0.c:97:
++                        timer0->tccr0b |= (1 << 2 | 1 << 1);$
+
+ERROR: code indent should use tabs where possible
+#102: FILE: timer0/timer0.c:99:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#102: FILE: timer0/timer0.c:99:
++                        break;$
+
+ERROR: code indent should use tabs where possible
+#104: FILE: timer0/timer0.c:101:
++                case EXTERNAL_RISING:$
+
+WARNING: please, no spaces at the start of a line
+#104: FILE: timer0/timer0.c:101:
++                case EXTERNAL_RISING:$
+
+ERROR: code indent should use tabs where possible
+#105: FILE: timer0/timer0.c:102:
++                        timer0->tccr0b |= (1 << 2 | 1 << 1 | 1 << 0);$
+
+WARNING: please, no spaces at the start of a line
+#105: FILE: timer0/timer0.c:102:
++                        timer0->tccr0b |= (1 << 2 | 1 << 1 | 1 << 0);$
+
+ERROR: code indent should use tabs where possible
+#106: FILE: timer0/timer0.c:103:
++                        break;$
+
+WARNING: please, no spaces at the start of a line
+#106: FILE: timer0/timer0.c:103:
++                        break;$
+
+ERROR: code indent should use tabs where possible
+#128: FILE: timer0/timer0.c:125:
++        return 0;$
+
+WARNING: please, no spaces at the start of a line
+#128: FILE: timer0/timer0.c:125:
++        return 0;$
+
+ERROR: Bad function definition - uint8_t timer0_get_value() should probably be uint8_t timer0_get_value(void)
+#133: FILE: timer0/timer0.c:130:
++uint8_t timer0_get_value()
+
+ERROR: code indent should use tabs where possible
+#135: FILE: timer0/timer0.c:132:
++        return timer0->tcnt0;$
+
+WARNING: please, no spaces at the start of a line
+#135: FILE: timer0/timer0.c:132:
++        return timer0->tcnt0;$
+
+ERROR: code indent should use tabs where possible
+#142: FILE: timer0/timer0.c:139:
++        timer0->tcnt0 = value;$
+
+WARNING: please, no spaces at the start of a line
+#142: FILE: timer0/timer0.c:139:
++        timer0->tcnt0 = value;$
+
+ERROR: code indent should use tabs where possible
+#154: FILE: timer0/timer0.c:151:
++                *timer0_timsk0 |= (1 << 1);$
+
+WARNING: please, no spaces at the start of a line
+#154: FILE: timer0/timer0.c:151:
++                *timer0_timsk0 |= (1 << 1);$
+
+ERROR: code indent should use tabs where possible
+#155: FILE: timer0/timer0.c:152:
++                function_a = callback;$
+
+WARNING: please, no spaces at the start of a line
+#155: FILE: timer0/timer0.c:152:
++                function_a = callback;$
+
+ERROR: code indent should use tabs where possible
+#156: FILE: timer0/timer0.c:153:
++        } else { /* counter == COUNTER_B */$
+
+WARNING: please, no spaces at the start of a line
+#156: FILE: timer0/timer0.c:153:
++        } else { /* counter == COUNTER_B */$
+
+ERROR: code indent should use tabs where possible
+#158: FILE: timer0/timer0.c:155:
++                function_b = callback;$
+
+WARNING: please, no spaces at the start of a line
+#158: FILE: timer0/timer0.c:155:
++                function_b = callback;$
+
+ERROR: code indent should use tabs where possible
+#159: FILE: timer0/timer0.c:156:
++        }$
+
+WARNING: please, no spaces at the start of a line
+#159: FILE: timer0/timer0.c:156:
++        }$
+
+ERROR: code indent should use tabs where possible
+#169: FILE: timer0/timer0.c:166:
++        if (counter > 1)$
+
+WARNING: please, no spaces at the start of a line
+#169: FILE: timer0/timer0.c:166:
++        if (counter > 1)$
+
+ERROR: code indent should use tabs where possible
+#172: FILE: timer0/timer0.c:169:
++        if (counter == COUNTER_A) {$
+
+WARNING: please, no spaces at the start of a line
+#172: FILE: timer0/timer0.c:169:
++        if (counter == COUNTER_A) {$
+
+ERROR: code indent should use tabs where possible
+#173: FILE: timer0/timer0.c:170:
++                *timer0_timsk0 &= ~(1 << 1);$
+
+WARNING: please, no spaces at the start of a line
+#173: FILE: timer0/timer0.c:170:
++                *timer0_timsk0 &= ~(1 << 1);$
+
+ERROR: code indent should use tabs where possible
+#174: FILE: timer0/timer0.c:171:
++                function_a = NULL;$
+
+WARNING: please, no spaces at the start of a line
+#174: FILE: timer0/timer0.c:171:
++                function_a = NULL;$
+
+ERROR: code indent should use tabs where possible
+#175: FILE: timer0/timer0.c:172:
++        } else { /* counter == COUNTER_B */$
+
+WARNING: please, no spaces at the start of a line
+#175: FILE: timer0/timer0.c:172:
++        } else { /* counter == COUNTER_B */$
+
+ERROR: code indent should use tabs where possible
+#176: FILE: timer0/timer0.c:173:
++                *timer0_timsk0 &= ~(1 << 2);$
+
+WARNING: please, no spaces at the start of a line
+#176: FILE: timer0/timer0.c:173:
++                *timer0_timsk0 &= ~(1 << 2);$
+
+ERROR: code indent should use tabs where possible
+#177: FILE: timer0/timer0.c:174:
++                function_b = NULL;$
+
+WARNING: please, no spaces at the start of a line
+#177: FILE: timer0/timer0.c:174:
++                function_b = NULL;$
+
+ERROR: code indent should use tabs where possible
+#178: FILE: timer0/timer0.c:175:
++        }$
+
+WARNING: please, no spaces at the start of a line
+#178: FILE: timer0/timer0.c:175:
++        }$
+
+ERROR: code indent should use tabs where possible
+#180: FILE: timer0/timer0.c:177:
++        return 0;$
+
+WARNING: please, no spaces at the start of a line
+#180: FILE: timer0/timer0.c:177:
++        return 0;$
+

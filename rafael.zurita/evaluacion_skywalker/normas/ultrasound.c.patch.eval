@@ -1,0 +1,18 @@
+
+WARNING: Missing a blank line after declarations
+#98: FILE: ultrasound/ultrasound.c:95:
++	uint32_t timeout = 100000;
++	while (!(*pin_echo & (1 << echo_bit_number)) && timeout > 0) {
+
+WARNING: braces {} are not necessary for single statement blocks
+#98: FILE: ultrasound/ultrasound.c:95:
++	while (!(*pin_echo & (1 << echo_bit_number)) && timeout > 0) {
++		timeout--;
++	}
+
+WARNING: braces {} are not necessary for single statement blocks
+#121: FILE: ultrasound/ultrasound.c:118:
++	if (distance < 2 || distance > 400) {
++		return -1;
++	}
+
