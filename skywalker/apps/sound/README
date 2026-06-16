@@ -1,2 +1,28 @@
 
-Aplicación de ejemplo que reproduce audio.
+REPRODUCTOR DE AUDIO WAV
+--------------------------------------------------
+
+Este proyecto permite reproducir audio en un microcontrolador (ATMega328P) utilizando un parlante. El sistema consta de un transmisor en C (conversor.c) que corre en la PC y envia un archivo .wav por el puerto serie, y la aplicacion principal (main.c) en el microcontrolador que genera el sonido ajustando una senal PWM.
+
+
+1. CONVERSION DE AUDIO (.mp4 a .wav)
+--------------------------------------------------
+El archivo de audio debe ser obligatoriamente 8 bits sin signo, mono, y a 8000 Hz. Puedes extraerlo y convertirlo desde un video usando ffmpeg en tu terminal con este comando:
+
+ffmpeg -i video.mp4 -ac 1 -ar 8000 -acodec pcm_u8 audio.wav
+
+
+2. COMPILACION Y EJECUCION
+--------------------------------------------------
+
+MICROCONTROLADOR: 
+Compila el firmware y flashea el archivo resultante (sound.hex) en tu placa conectada al puerto /dev/ttyUSB0. Comando:
+
+make
+
+
+TRANSMISOR (PC): 
+Compila el enviador en tu computadora y ejecutalo pasandole el archivo .wav para comenzar la transmision. Comandos:
+
+gcc conversor.c -o conversor
+./conversor audio.wav
