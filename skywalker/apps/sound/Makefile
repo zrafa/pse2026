@@ -1,32 +1,21 @@
-
 MCU = atmega328p
 F_CPU = 16000000UL
-PORT = /dev/ttyUSB0
 CC = avr-gcc
 OBJCOPY = avr-objcopy
-AVRDUDE = avrdude
 
-CFLAGS = -Os -DF_CPU=$(F_CPU) -mmcu=$(MCU) -Wall
+CFLAGS = -Wall -g -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU) -I../../serial -I../../timer_1
 
-all: main.hex
+SRCS = main.c ../../serial/serial.c ../../timer_1/timer1.c
+OBJS = $(SRCS:.c=.o)
+TARGET = sound
 
-main.elf: main.o serial.o timer1.o
-	$(CC) $(CFLAGS) -o main.elf main.o serial.o timer1.o
+all: $(TARGET).hex
 
-main.o: main.c serial.h timer1.h
-	$(CC) $(CFLAGS) -c main.c
+$(TARGET).elf: $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
 
-serial.o: serial.c serial.h
-	$(CC) $(CFLAGS) -c serial.c
-
-timer1.o: timer1.c timer1.h
-	$(CC) $(CFLAGS) -c timer1.c
-
-main.hex: main.elf
-	$(OBJCOPY) -O ihex -R .eeprom main.elf main.hex
+$(TARGET).hex: $(TARGET).elf
+	$(OBJCOPY) -j .text -j .data -O ihex $< $@
 
 clean:
-	rm -f *.o *.elf *.hex
-
-flash: main.hex
-	$(AVRDUDE) -v -c arduino -p $(MCU) -P $(PORT) -b 115200 -D -U flash:w:main.hex:i
+	rm -f $(OBJS) $(TARGET).elf $(TARGET).hex
