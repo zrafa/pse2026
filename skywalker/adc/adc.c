@@ -1,13 +1,3 @@
-/*
-delay_ms() (por software sin avr libc),
-ADC: adc_init, adc_get
-Agregar al driver ADC una funcion de configuración que permita (o en el init):
-- elegir el comparador de tensión a 5v (vcc)
-- elegir el comparador a otro voltage interno (creo que era 1v)
-- elegir el comparador con una señal externa de voltage
-ultrasound get()
-*/
-
 /**********************************************************************
  *
  * adc.c - Driver del ADC del atmega328p
@@ -67,9 +57,9 @@ void adc_init(uint8_t mode)
 uint16_t adc_get(uint8_t pin)
 {
 
-	if (pin > 8 || pin < 0) {
+	if (pin > 8 || pin < 0) 
 		return -1;
-	}
+	
 
 	/* 1. Selects which analog pin is connected to the ADC */
 
@@ -88,6 +78,7 @@ uint16_t adc_get(uint8_t pin)
 	/* IMPORTANT: ADCL must be read first, then ADCH */
 
 	uint16_t data = adc->adcl;
+	
 	data += ((adc->adch) & (0b00000011)) * 256;
 
 	return data;

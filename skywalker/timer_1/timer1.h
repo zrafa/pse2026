@@ -1,13 +1,17 @@
-//(TCCR1A)
+#ifndef _TIMER1_H
+#define _TIMER1_H
+
+#include <stdint.h>
+
+/* (TCCR1A) */
 #define WGM10 0
 #define WGM11 1
 #define COM1A0 6
 #define COM1A1 7
-
 #define COM1B0 4
 #define COM1B1 5
 
-//(TCCR1B)
+/* (TCCR1B) */
 #define CS10 0
 #define CS11 1
 #define WGM12 3
@@ -25,3 +29,10 @@
 
 #define A 0
 #define B 1
+
+int8_t init_timer(uint8_t mode, uint8_t prescalar);
+uint16_t get_timer(void);
+int8_t configure_comparator(uint16_t value, uint8_t mode);
+void configure_top(uint16_t top);
+
+#endif

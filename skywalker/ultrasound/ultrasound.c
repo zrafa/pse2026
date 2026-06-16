@@ -6,7 +6,7 @@
 #define F_CPU   16000000UL
 #include <util/delay.h>
 #include <avr/io.h>
-
+#include "ultrasound.h"
 /* dirección de PORT Trigger */
 volatile unsigned char *port_trigger;
 
@@ -92,9 +92,10 @@ int ultrasound_get(void)
 
 	/* Esperar a que el pin ECHO se ponga en ALTO (inicio del pulso) */
 	uint32_t timeout = 100000;
-	while (!(*pin_echo & (1 << echo_bit_number)) && timeout > 0) {
+
+	while (!(*pin_echo & (1 << echo_bit_number)) && timeout > 0)
 		timeout--;
-	}
+	
 
 	if (timeout == 0)
 		return -1; /* Error o sensor no conectado */
@@ -115,9 +116,8 @@ int ultrasound_get(void)
 	distance = (int)(duration / 58);
 
 	/* El sensor HC-SR04 tiene un rango de 2cm a 400cm */
-	if (distance < 2 || distance > 400) {
+	if (distance < 2 || distance > 400)
 		return -1;
-	}
-
+	
 	return distance;
 }

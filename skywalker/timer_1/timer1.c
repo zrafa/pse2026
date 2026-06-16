@@ -55,7 +55,7 @@ int8_t init_timer(uint8_t mode, uint8_t prescalar)
 	return 0;
 }
 
-uint16_t get_timer()
+uint16_t get_timer(void)
 {
 	uint8_t low = timer1->tcnt1l;
 	uint8_t high = timer1->tcnt1h;
@@ -65,10 +65,9 @@ uint16_t get_timer()
 
 int8_t configure_comparator(uint16_t value, uint8_t mode)
 {
-	if (mode != A && mode != B) {
+	if (mode != A && mode != B)
 		return -1;
-	}
-
+	
 	/* primero high o primero low? */
 	uint8_t byte_low = (uint8_t)(value & 0xFF);
 

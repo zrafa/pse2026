@@ -1,6 +1,6 @@
 
 /* CONSTANTES DE DIRECCIONES */
-#define PUERTO_D 0x2B  
+#define PUERTO_D 0x2B
 #define DDR_D 0x2A
 #define PIN_D 0x29
 #define PUERTO_C 0x28  
@@ -14,7 +14,7 @@
 #ifndef _ULTRASOUND_H
 #define _ULTRASOUND_H
 
-void ultrasound_init(char, char);
-int ultrasound_get();
+void ultrasound_init(char trigger_num, char echo_num);
+int ultrasound_get(void);
 
-#endif 
+#endif

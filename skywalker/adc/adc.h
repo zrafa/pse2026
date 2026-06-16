@@ -2,9 +2,9 @@
  *
  * Filename:    adc.h
  * 
- * API para la aplicacion embebida 
- * META : ocultar el hardware a la aplicacion 
- *
+ * API para la aplicacion embebida
+ * META : ocultar el hardware a la aplicacion
+ * 
  **********************************************************************/
 
 /* ADMUX */
@@ -26,8 +26,7 @@
 #ifndef _ADC_H
 #define _ADC_H
 
-void adc_init(void);
-int adc_get(char);
-void delay_ms();
+void adc_init(uint8_t mode);
+uint16_t adc_get(uint8_t pin);
 
-#endif 
+#endif
