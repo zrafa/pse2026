@@ -43,18 +43,17 @@ typedef struct {
 
 uart_t *puerto_serial = (uart_t *)(0xc0);
 
-#define USART_BAUDRATE 9600
-#define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
-
 /*
  * Inicializa el hardware
  * Parametro interruption_on: 0 para modo sin interrupciones,
  * 1 para modo con interrupciones.
  */
-void serial_init(uint8_t interruption_on)
+void serial_init(uint32_t baudrate, uint8_t interruption_on)
 {
-	puerto_serial->baud_rate_high = (uint8_t)(BAUD_PRESCALE >> 8);
-	puerto_serial->baud_rate_low = (uint8_t)(BAUD_PRESCALE);
+	uint16_t baud_prescale = (uint16_t)((F_CPU / (baudrate * 16UL)) - 1);
+
+	puerto_serial->baud_rate_high = (uint8_t)(baud_prescale >> 8);
+	puerto_serial->baud_rate_low = (uint8_t)(baud_prescale);
 
 	puerto_serial->status_control_c = (1 << UCSZ01) | (1 << UCSZ00);
 	puerto_serial->status_control_b = (1 << RXEN0) | (1 << TXEN0);

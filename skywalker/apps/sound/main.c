@@ -15,9 +15,9 @@ int main(void)
 {
 	char muestra;
 
-	serial_init(1);
+	serial_init(115200, 1);
 	init_timer(PWM, PRESCALAR_1);
-	configure_top(255);
+	configure_top(127);
 	
 	TCCR1A |= (1 << 7);
 

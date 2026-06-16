@@ -16,7 +16,7 @@
  * Inicializa el módulo USART a 9600 bps, 8 bits de datos, 
  * 1 bit de parada y sin paridad (Modo por encuesta de forma nativa).
  */
-void serial_init(uint8_t interruption_on);
+void serial_init(uint32_t baudrate, uint8_t interruption_on);
 /**
  * Activa las interrupciones de hardware para la recepción (RX)
  * y habilita el almacenamiento automático en el buffer circular.
