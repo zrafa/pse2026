@@ -1,8 +1,9 @@
 /* timer0.c - Driver del timer 0 del atmega328p
  * 
- * META: ocultar el hardware a la aplicacion 
+ * META: ocultar el hardware a la aplicacion
  *
- * USO:
+ * USO: primero llamar al init para configurar el timer
+ *  luego, se puede utilizar cualquier función
  */
 
 #include "timer0.h"
@@ -31,15 +32,15 @@ void (*function_b)();
 /* Rutina de atencion de interrupciones de contador a */
 ISR(TIMER0_COMPA_vect)
 {
-        if (function_a)
-                function_a();
+	if (function_a)
+		function_a();
 }
 
 /* Rutina de atencion de interrupciones de contador b */
 ISR(TIMER0_COMPB_vect)
 {
-        if (function_b)
-                function_b();
+	if (function_b)
+		function_b();
 }
 
 /* Configura el modo y el prescalar del timer
@@ -48,7 +49,7 @@ ISR(TIMER0_COMPB_vect)
  */
 int8_t timer0_init(uint8_t mode, uint8_t clock_select, uint8_t initial_top)
 {
-	if (mode > 1 || clock_select > 4)
+	if (mode > 1 || clock_select > 6)
 		return -1;
 
 	if (mode == MODE_CTC) {
@@ -59,49 +60,48 @@ int8_t timer0_init(uint8_t mode, uint8_t clock_select, uint8_t initial_top)
 		timer0->tccr0a |= (1 << 1 | 1 << 0);
 		timer0->tccr0b |= (1 << 3);
 
-                /* non-inverting mode */
-                timer0->tccr0a |= (1 << 5);
-                timer0->tccr0a &= ~(1 << 4);
+		/* non-inverting mode */
+		timer0->tccr0a |= (1 << 5);
+		timer0->tccr0a &= ~(1 << 4);
 
-                /* configurar puerto b de salida */
-                gpio_output(D5);
+		/* configurar puerto b de salida */
+		gpio_output(D5);
 	}
 
-        switch (clock_select) {
-		case PRESCALER_1:
-                        timer0->tccr0b |= (1 << 0);
-		        timer0->tccr0b &= ~(1 << 2 | 1 << 1);
-                        break;
-			
-		case PRESCALER_8:
-                        timer0->tccr0b |= (1 << 1);
-			timer0->tccr0b &= ~(1 << 2 | 1 << 0);
-                        break;
+	switch (clock_select) {
+	case PRESCALER_1:
+		timer0->tccr0b |= (1 << 0);
+		timer0->tccr0b &= ~(1 << 2 | 1 << 1);
+		break;
 
-		case PRESCALER_64:
-			timer0->tccr0b |= (1 << 1 | 1 << 0);
-			timer0->tccr0b &= ~(1 << 2);
-                        break;
+	case PRESCALER_8:
+		timer0->tccr0b |= (1 << 1);
+		timer0->tccr0b &= ~(1 << 2 | 1 << 0);
+		break;
 
-		case PRESCALER_256:
-                        timer0->tccr0b |= (1 << 2);
-		        timer0->tccr0b &= ~(1 << 1 | 1 << 0);
-                        break;
+	case PRESCALER_64:
+		timer0->tccr0b |= (1 << 1 | 1 << 0);
+		timer0->tccr0b &= ~(1 << 2);
+		break;
 
-		case PRESCALER_1024:
-                        timer0->tccr0b |= (1 << 2 | 1 << 0);
-			timer0->tccr0b &= ~(1 << 1);
-                        break;
+	case PRESCALER_256:
+		timer0->tccr0b |= (1 << 2);
+		timer0->tccr0b &= ~(1 << 1 | 1 << 0);
+		break;
 
-                case EXTERNAL_FALLING:
-                        timer0->tccr0b |= (1 << 2 | 1 << 1);
-			timer0->tccr0b &= ~(1 << 0);
-                        break;
+	case PRESCALER_1024:
+		timer0->tccr0b |= (1 << 2 | 1 << 0);
+		timer0->tccr0b &= ~(1 << 1);
+		break;
 
-                case EXTERNAL_RISING:
-                        timer0->tccr0b |= (1 << 2 | 1 << 1 | 1 << 0);
-                        break;
+	case EXTERNAL_FALLING:
+		timer0->tccr0b |= (1 << 2 | 1 << 1);
+		timer0->tccr0b &= ~(1 << 0);
+		break;
 
+	case EXTERNAL_RISING:
+		timer0->tccr0b |= (1 << 2 | 1 << 1 | 1 << 0);
+		break;
 	}
 
 	timer0->ocr0a = initial_top;
@@ -122,21 +122,21 @@ int8_t timer0_set_counter(uint8_t counter, uint8_t new_value)
 	else /* counter == COUNTER_B */
 		timer0->ocr0b = new_value;
 
-        return 0;
+	return 0;
 }
 
 /* Obtiene el valor del timer
  */
-uint8_t timer0_get_value()
+uint8_t timer0_get_value(void)
 {
-        return timer0->tcnt0;
+	return timer0->tcnt0;
 }
 
 /* Escribe un valor en el contador del timer
  */
 void timer0_write_value(uint8_t value)
 {
-        timer0->tcnt0 = value;
+	timer0->tcnt0 = value;
 }
 
 /* Habilita las interrupciones del contador pasado
@@ -148,12 +148,12 @@ int8_t timer0_enable_interrupts(uint8_t counter, void (*callback)())
 		return -1;
 
 	if (counter == COUNTER_A) {
-                *timer0_timsk0 |= (1 << 1);
-                function_a = callback;
-        } else { /* counter == COUNTER_B */
+		*timer0_timsk0 |= (1 << 1);
+		function_a = callback;
+	} else { /* counter == COUNTER_B */
 		*timer0_timsk0 |= (1 << 2);
-                function_b = callback;
-        }
+		function_b = callback;
+	}
 
 	return 0;
 }
@@ -163,16 +163,16 @@ int8_t timer0_enable_interrupts(uint8_t counter, void (*callback)())
  */
 int8_t timer0_disable_interrupts(uint8_t counter)
 {
-        if (counter > 1)
+	if (counter > 1)
 		return -1;
 
-        if (counter == COUNTER_A) {
-                *timer0_timsk0 &= ~(1 << 1);
-                function_a = NULL;
-        } else { /* counter == COUNTER_B */
-                *timer0_timsk0 &= ~(1 << 2);
-                function_b = NULL;
-        }
+	if (counter == COUNTER_A) {
+		*timer0_timsk0 &= ~(1 << 1);
+		function_a = NULL;
+	} else { /* counter == COUNTER_B */
+		*timer0_timsk0 &= ~(1 << 2);
+		function_b = NULL;
+	}
 
-        return 0;
+	return 0;
 }
