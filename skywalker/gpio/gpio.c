@@ -1,6 +1,6 @@
 /* gpio.c - Driver de pines GPIO del atmega328p
- * 
- * META: ocultar el hardware a la aplicacion 
+ *
+ * META: ocultar el hardware a la aplicacion
  *
  * USO: primero se debe configurar los pines de input/output
  *	luego, se puede usar las funciones correspondientes segun se necesite
@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 typedef struct {
-	uint8_t pin;    /* Input pin adress (valores que recibe de entrada) */
+	uint8_t pin;    /* Input pin address (valores que recibe de entrada) */
 	uint8_t ddr;    /* Data direction register (define el puerto como entrada o salida) */
 	uint8_t port;   /* Data register (valores que se envían como salida) */
 } volatile gpio_t;
@@ -68,7 +68,7 @@ int8_t gpio_input(uint8_t pin, int8_t pull_up)
 {
 	gpio_t *port = gpio_port_map(pin);
 	uint8_t pin_port = pin % 8;
-    
+
 	if (port == NULL)
 		return -1;
 
@@ -87,13 +87,13 @@ int8_t gpio_output(uint8_t pin)
 {
 	gpio_t *port = gpio_port_map(pin);
 	uint8_t pin_port = pin % 8;
-    
+
 	if (port == NULL)
 		return -1;
 
 	port->ddr |= (1 << pin_port);
 
-    	return 0;
+	return 0;
 }
 
 /* Lee un bit en el pin pasado
@@ -103,7 +103,7 @@ int8_t gpio_read(uint8_t pin)
 {
 	gpio_t *port = gpio_port_map(pin);
 	uint8_t pin_port = pin % 8;
-    
+
 	if (port == NULL)
 		return -1;
 
@@ -117,7 +117,7 @@ int8_t gpio_write(uint8_t pin, uint8_t value)
 {
 	gpio_t *port = gpio_port_map(pin);
 	uint8_t pin_port = pin % 8;
-    
+
 	if (port == NULL || value >= 2)
 		return -1;
 
@@ -137,7 +137,7 @@ int8_t gpio_toggle(uint8_t pin)
 {
 	gpio_t *port = gpio_port_map(pin);
 	uint8_t pin_port = pin % 8;
-    
+
 	if (port == NULL)
 		return -1;
 
@@ -153,7 +153,7 @@ int8_t gpio_read_port(uint8_t port_name)
 {
 	gpio_t *port = gpio_get_port(port_name);
 	uint8_t valid_pins = gpio_valid_pins(port_name);
-    
+
 	if (port == NULL)
 		return -1;
 
@@ -168,7 +168,7 @@ int8_t gpio_write_port(uint8_t port_name, uint8_t values)
 {
 	gpio_t *port = gpio_get_port(port_name);
 	uint8_t valid_pins = gpio_valid_pins(port_name);
-    
+
 	if (port == NULL)
 		return -1;
 

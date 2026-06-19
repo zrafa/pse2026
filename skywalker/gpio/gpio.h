@@ -9,7 +9,7 @@
 #define NULL 0
 
 #define LOW 0
-#define HIGH 0
+#define HIGH 1
 
 /* PBn */
 #define D8  0
@@ -45,12 +45,12 @@
 #ifndef _GPIO_H
 #define _GPIO_H
 
-int8_t gpio_input(uint8_t, int8_t);
-int8_t gpio_output(uint8_t);
-int8_t gpio_read(uint8_t);
-int8_t gpio_write(uint8_t, uint8_t);
-int8_t gpio_toggle(uint8_t);
-int8_t gpio_read_port(uint8_t);
-int8_t gpio_write_port(uint8_t, uint8_t);
+int8_t gpio_input(uint8_t pin, int8_t pull_up);
+int8_t gpio_output(uint8_t pin);
+int8_t gpio_read(uint8_t pin);
+int8_t gpio_write(uint8_t pin, uint8_t value);
+int8_t gpio_toggle(uint8_t pin);
+int8_t gpio_read_port(uint8_t port_name);
+int8_t gpio_write_port(uint8_t port_name, uint8_t values);
 
 #endif /* _GPIO_H */
