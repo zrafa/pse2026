@@ -1,10 +1,10 @@
 CC=avr-gcc
-OBJETOS=gpio.o timer0.o serial.o main.o
-APP=cronometro
+OBJETOS=timer0.o adc.o gpio.o main.o
+APP=motor
 CFLAGS=-Os -DF_CPU=16000000UL -mmcu=atmega328p 
 LDFLAGS=-mmcu=atmega328p
 FIRMWARE=imagen.hex
-DRIVERS=gpio timer0
+DRIVERS= gpio timer0 adc
 
 # Ruta base de los drivers (relativa al makefile)
 DRIVERS_BASE=../..
