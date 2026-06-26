@@ -10,6 +10,7 @@
 
 #include <avr/interrupt.h>
 #include <stdint.h>
+#include <stdlib.h> 
 #include "serial.h"
 
 #define BUFFER_SIZE 64
@@ -122,14 +123,15 @@ char serial_get_char_buffered(void)
 	return c;
 }
 
-/* Envía un float de 4 bytes */
+/* Envía un float */
 void serial_put_float(float f)
 {
-	uint8_t *ptr = (uint8_t *)&f;
-	int i;
-
-	for (i = 0; i < 4; i++)
-		serial_put_char(ptr[i]);
+	char buffer[20];
+	
+	/* Convierte el float a string */
+	dtostrf(f, 0, 4, buffer);
+	
+	serial_put_str(buffer);
 }
 
 /* Recibe un float de 4 bytes por encuesta */
@@ -158,14 +160,14 @@ float serial_get_float_buffered(void)
 	return f;
 }
 
-/* Envía un int de 2 bytes */
+/* Envía un int  */
 void serial_put_int(int16_t s)
 {
-	uint8_t *ptr = (uint8_t *)&s;
-	int i;
-
-	for (i = 0; i < 2; i++)
-		serial_put_char(ptr[i]);
+	char buffer[10];
+	
+	itoa(s, buffer, 10);
+	
+	serial_put_str(buffer);
 }
 
 /* Recibe un int de 2 bytes por encuesta */
