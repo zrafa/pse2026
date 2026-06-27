@@ -126,12 +126,24 @@ char serial_get_char_buffered(void)
 /* Envía un float */
 void serial_put_float(float f)
 {
-	char buffer[20];
+	int16_t int_part;
+	float remainder;
+	int digit;
+	int i;
+
+	int_part = (int16_t)f;
+	serial_put_int(int_part);
+
+	serial_put_char('.');
+
+	remainder = f - (float)int_part;
 	
-	/* Convierte el float a string */
-	dtostrf(f, 0, 4, buffer);
-	
-	serial_put_str(buffer);
+	for (i = 0; i < 4; i++) {
+		remainder *= 10.0;
+		digit = (int)remainder;
+		serial_put_char(digit + '0');
+		remainder -= (float)digit;
+	}
 }
 
 /* Recibe un float de 4 bytes por encuesta */
@@ -163,11 +175,19 @@ float serial_get_float_buffered(void)
 /* Envía un int  */
 void serial_put_int(int16_t s)
 {
-	char buffer[10];
-	
-	itoa(s, buffer, 10);
-	
-	serial_put_str(buffer);
+	char buffer[6]; 
+	int i = 0;
+
+	do {
+		buffer[i] = (s % 10) + '0';
+		s /= 10;
+		i++;
+	} while (s > 0);
+
+	while (i > 0) {
+		i--;
+		serial_put_char(buffer[i]);
+	}
 }
 
 /* Recibe un int de 2 bytes por encuesta */
